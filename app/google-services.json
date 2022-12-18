@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "715374281474",
+    "project_id": "cooker-41ed5",
+    "storage_bucket": "cooker-41ed5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715374281474:android:3d6bc34b7540abc493b81b",
+        "android_client_info": {
+          "package_name": "com.example.cooker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715374281474-7nhrecpuk032qjmo7ujm6freerdieeva.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cooker",
+            "certificate_hash": "426dbf7e40779611427d1456d14472b5804c1f1a"
+          }
+        },
+        {
+          "client_id": "715374281474-7o2117t1krbapr6ekch4njoq4mvtcbsu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRdLIjZWrhits7koeSGnI-84445yaksHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715374281474-7o2117t1krbapr6ekch4njoq4mvtcbsu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
