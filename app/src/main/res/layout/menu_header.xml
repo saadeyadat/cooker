@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:textSize="20dp"
-        android:textColor="@color/white"
         android:textStyle="bold"/>
 
     <TextView
@@ -30,7 +29,6 @@
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:textSize="16dp"
-        android:text="saad.eyadat.97@hotmail.com"
         app:layout_constraintTop_toBottomOf="@+id/menu_user_name"/>
 
 

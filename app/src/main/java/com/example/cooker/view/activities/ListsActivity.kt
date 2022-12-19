@@ -70,16 +70,16 @@ class ListsActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        menu_user_image.setImageURI(Uri.parse(user.image))
+
         menu_user_name.text = user.name
         menu_user_email.text = user.email
+        if (user.image!!.isNotEmpty())
+            menu_user_image.setImageURI(Uri.parse(user.image))
 
         menu_user_image.setOnClickListener { addUserImage(user) }
 
         menu.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.home -> Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
-                R.id.all_users -> showAllUsers()
                 R.id.logout -> logout()
             }
             true
@@ -112,7 +112,7 @@ class ListsActivity : AppCompatActivity() {
                 userImageAlert(this)
         }
         else
-            onlyOwnerAllowedAlert(this)
+            Toast.makeText(this, "Only Recipe Owner Allow To Edit This Field.", Toast.LENGTH_SHORT).show()
     }
 
 
@@ -217,16 +217,6 @@ class ListsActivity : AppCompatActivity() {
                     ImagesManager.galleryImage(userContent)
                 }
             }
-            alertBuilder.show()
-        }
-    }
-
-    private fun onlyOwnerAllowedAlert(context: Context) {
-        usersViewModel.viewModelScope.launch(Dispatchers.Main) {
-            val alertBuilder = AlertDialog.Builder(context)
-            alertBuilder.setTitle("Alert")
-            alertBuilder.setMessage("Only List Owner Can Edit This Field.")
-            alertBuilder.setPositiveButton("OK") { dialogInterface: DialogInterface, i: Int -> }
             alertBuilder.show()
         }
     }

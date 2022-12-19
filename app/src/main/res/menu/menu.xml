@@ -4,19 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:id="@+id/grp1">
-        <item
-            android:id="@+id/home"
-            android:icon="@drawable/home"
-            android:title="Home" />
-
-        <item
-            android:id="@+id/all_users"
-            android:icon="@drawable/user_image"
-            android:title="All Users" />
-
-    </group>
-
     <group android:id="@+id/grp2">
         <item
             android:id="@+id/about"

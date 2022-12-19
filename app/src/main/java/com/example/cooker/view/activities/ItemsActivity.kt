@@ -8,13 +8,17 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.viewModelScope
 import com.example.cooker.other.managers.ImagesManager
 import com.example.cooker.R
@@ -27,12 +31,15 @@ import com.example.cooker.other.adapters.ParticipantsAdapter
 import com.example.cooker.other.managers.FirebaseManager
 import com.example.cooker.view.fragments.ItemFragment
 import com.example.cooker.other.managers.NotificationsManager
+import com.example.cooker.other.service.ItemService
 import com.example.cooker.view.fragments.DeleteParticipantFragment
 import com.example.cooker.view.fragments.NewParticipantFragment
 import com.example.cooker.viewModel.ItemsViewModel
 import com.example.cooker.viewModel.ListsViewModel
 import com.example.cooker.viewModel.UsersViewModel
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.items_activity.*
+import kotlinx.android.synthetic.main.menu_header.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
@@ -51,10 +58,16 @@ class ItemsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.items_activity)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val listID = intent.extras!!.getString("listID")
         val userEmail = intent.extras!!.getString("userEmail")
         currentUserEmail = userEmail!!
         setList(listID!!)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun setList(listID: String){
@@ -182,7 +195,6 @@ class ItemsActivity : AppCompatActivity() {
         itemFragment.arguments = bundle
         supportFragmentManager.beginTransaction().replace(R.id.fragment_view, itemFragment).commit()
     }
-
 
     /* ---------------- Gallery Images Update ---------------- */
 
