@@ -59,6 +59,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <TextView
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:text="© All Rights Reserved 2023"
+            android:gravity="center"
+            android:textSize="10dp"
+            android:textColor="@color/white"
+            android:background="@color/purple_700"
+            app:layout_constraintTop_toBottomOf="@+id/add_list"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView

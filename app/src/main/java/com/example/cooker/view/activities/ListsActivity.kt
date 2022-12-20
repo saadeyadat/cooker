@@ -164,7 +164,7 @@ class ListsActivity : AppCompatActivity() {
         var userLists = mutableListOf<List>()
         listsViewModel.listsData.observe(this) { userLists = setUserLists(it, user) }
         for (list in userLists)
-            if (list.name.toLowerCase().contains(newText!!))
+            if (list.name.split('-')[1].toLowerCase().contains(newText!!))
                 filteredLists.add(list)
         if (filteredLists.isEmpty())
             Toast.makeText(this, "No Lists Found", Toast.LENGTH_SHORT).show()
