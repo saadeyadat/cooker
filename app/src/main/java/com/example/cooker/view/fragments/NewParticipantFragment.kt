@@ -2,7 +2,7 @@ package com.example.cooker.view.fragments
 
 import androidx.fragment.app.Fragment
 import com.example.cooker.R
-import com.example.cooker.model.Lists
+import com.example.cooker.model.List
 import com.example.cooker.model.database.Repository
 import com.example.cooker.other.managers.FirebaseManager
 import kotlinx.android.synthetic.main.item_fragment_info.add_button
@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.new_participant_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class NewParticipantFragment(private val list: Lists, private val allUsers: MutableList<String>): Fragment(R.layout.new_participant_fragment) {
+class NewParticipantFragment(private val list: List, private val allUsers: MutableList<String>): Fragment(R.layout.new_participant_fragment) {
 
     override fun onResume() {
         super.onResume()

@@ -3,7 +3,7 @@ package com.example.cooker.model.database
 import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
-import com.example.cooker.model.Lists
+import com.example.cooker.model.List
 import com.example.cooker.model.Item
 import com.example.cooker.model.User
 import com.example.cooker.other.managers.FirebaseManager
@@ -56,28 +56,28 @@ class Repository private constructor(application: Context?) {
     }
 
     //------------- Lists Functions -------------//
-    fun addList(list: Lists) {
+    fun addList(list: List) {
         listsDao.addList(list)
     }
 
-    fun deleteList(list: Lists) {
+    fun deleteList(list: List) {
         listsDao.deleteList(list)
     }
 
-    private fun updateList(list: Lists) {
+    private fun updateList(list: List) {
         listsDao.updateList(list)
     }
 
-    fun getAllLists(): LiveData<List<Lists>> {
+    fun getAllLists(): LiveData<kotlin.collections.List<List>> {
         return listsDao.getAllLists()
     }
 
-    fun addParticipant(list: Lists, participant: String) {
+    fun addParticipant(list: List, participant: String) {
         list.participants += "$participant-"
         updateList(list)
     }
 
-    fun updateParticipants(list: Lists, participants: String) {
+    fun updateParticipants(list: List, participants: String) {
         list.participants = participants
         updateList(list)
     }

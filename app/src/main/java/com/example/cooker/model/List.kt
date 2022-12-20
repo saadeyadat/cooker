@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity(tableName = "allLists")
-data class Lists(
+data class List(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "owner") val owner: String,
     @ColumnInfo(name = "image") var image: String? = "",

@@ -8,22 +8,18 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.viewModelScope
 import com.example.cooker.other.managers.ImagesManager
 import com.example.cooker.R
 import com.example.cooker.model.Item
-import com.example.cooker.model.Lists
+import com.example.cooker.model.List
 import com.example.cooker.model.User
 import com.example.cooker.model.database.Repository
 import com.example.cooker.other.adapters.ItemsAdapter
@@ -31,15 +27,12 @@ import com.example.cooker.other.adapters.ParticipantsAdapter
 import com.example.cooker.other.managers.FirebaseManager
 import com.example.cooker.view.fragments.ItemFragment
 import com.example.cooker.other.managers.NotificationsManager
-import com.example.cooker.other.service.ItemService
 import com.example.cooker.view.fragments.DeleteParticipantFragment
 import com.example.cooker.view.fragments.NewParticipantFragment
 import com.example.cooker.viewModel.ItemsViewModel
 import com.example.cooker.viewModel.ListsViewModel
 import com.example.cooker.viewModel.UsersViewModel
-import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.items_activity.*
-import kotlinx.android.synthetic.main.menu_header.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
@@ -82,7 +75,7 @@ class ItemsActivity : AppCompatActivity() {
         }
     }
 
-    private fun displayInfo(list: Lists) {
+    private fun displayInfo(list: List) {
         user_name.text = list.owner.split("-")[1]
         list_name.text = list.name.split('-')[1]
         usersViewModel.usersData.observe(this) {
@@ -93,14 +86,14 @@ class ItemsActivity : AppCompatActivity() {
         }
     }
 
-    private fun clickListen(list: Lists) {
+    private fun clickListen(list: List) {
         add_item.setOnClickListener { addItem(list) }
         add_participant.setOnClickListener { addParticipant(list) }
         delete_participant.setOnClickListener { deleteParticipant(list) }
         user_image.setOnClickListener { addUserImage(list) }
     }
 
-    private fun addItem(list: Lists) {
+    private fun addItem(list: List) {
         val userEmail = list.owner.split("-")[0]
         val userName = list.owner.split("-")[1]
         val name = edit_text.text.toString()
@@ -118,7 +111,7 @@ class ItemsActivity : AppCompatActivity() {
             Toast.makeText(this, "Only Recipe Owner Allow To Edit This Field.", Toast.LENGTH_SHORT).show()
     }
 
-    private fun addParticipant(list: Lists) {
+    private fun addParticipant(list: List) {
         val allUsers = mutableListOf<String>()
         val newParticipantFragment = NewParticipantFragment(list, allUsers)
         usersViewModel.usersData.observe(this) {
@@ -131,7 +124,7 @@ class ItemsActivity : AppCompatActivity() {
             Toast.makeText(this, "Only Recipe Owner Allow To Edit This Field.", Toast.LENGTH_SHORT).show()
     }
 
-    private fun deleteParticipant(list: Lists) {
+    private fun deleteParticipant(list: List) {
         val deleteParticipantFragment = DeleteParticipantFragment(list)
         if (currentUserEmail == list.owner.split("-")[0])
             supportFragmentManager.beginTransaction().replace(R.id.delete_participant_fragment, deleteParticipantFragment).commit()
@@ -139,7 +132,7 @@ class ItemsActivity : AppCompatActivity() {
             Toast.makeText(this, "Only Recipe Owner Allow To Edit This Field.", Toast.LENGTH_SHORT).show()
     }
 
-    private fun addUserImage(list: Lists) {
+    private fun addUserImage(list: List) {
         usersViewModel.usersData.observe(this) {
             for (user in it)
                 if (user.email == list.owner.split("-")[0])
@@ -183,7 +176,7 @@ class ItemsActivity : AppCompatActivity() {
         }
     }
 
-    private fun itemsRecyclerView(list: Lists) {
+    private fun itemsRecyclerView(list: List) {
         val adapter = ItemsAdapter(list, currentUserEmail, this, updateImage()) { displayItemFragment(it) }
         item_recyclerView.adapter = adapter
         itemsViewModel.itemsData.observe(this) { adapter.setList(it) }

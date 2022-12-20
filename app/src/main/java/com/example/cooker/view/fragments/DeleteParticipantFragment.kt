@@ -2,7 +2,7 @@ package com.example.cooker.view.fragments
 
 import androidx.fragment.app.Fragment
 import com.example.cooker.R
-import com.example.cooker.model.Lists
+import com.example.cooker.model.List
 import com.example.cooker.model.database.Repository
 import com.example.cooker.other.managers.FirebaseManager
 import kotlinx.android.synthetic.main.delete_participant_fragment.*
@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.new_participant_fragment.participant_name
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class DeleteParticipantFragment(private val list: Lists): Fragment(R.layout.delete_participant_fragment) {
+class DeleteParticipantFragment(private val list: List): Fragment(R.layout.delete_participant_fragment) {
 
     override fun onResume() {
         super.onResume()

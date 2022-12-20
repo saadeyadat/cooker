@@ -3,7 +3,7 @@ package com.example.cooker.view.fragments
 import android.content.Context
 import androidx.fragment.app.Fragment
 import com.example.cooker.R
-import com.example.cooker.model.Lists
+import com.example.cooker.model.List
 import com.example.cooker.model.User
 import com.example.cooker.model.database.Repository
 import com.example.cooker.other.managers.FirebaseManager
@@ -21,8 +21,8 @@ class NewListFragment(private val user: User, context: Context): Fragment(R.layo
             val list = list_name.text.toString()
             GlobalScope.launch {
                 Repository.getInstance(context).addUserList(user, list)
-                Repository.getInstance(context).addList(Lists("${user.email}-$list", "${user.email}-${user.name}"))
-                FirebaseManager.getInstance(requireContext()).addList(Lists("${user.email}-$list", "${user.email}-${user.name}"))
+                Repository.getInstance(context).addList(List("${user.email}-$list", "${user.email}-${user.name}"))
+                //FirebaseManager.getInstance(requireContext()).addList(List("${user.email}-$list", "${user.email}-${user.name}"))
                 //NotificationsManager.newList(requireContext(), user.name)
             }
             list_name?.setText("")

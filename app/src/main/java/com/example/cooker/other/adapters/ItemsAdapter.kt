@@ -16,12 +16,12 @@ import com.bumptech.glide.Glide
 import com.example.cooker.model.Item
 import com.example.cooker.model.database.Repository
 import com.example.cooker.R
-import com.example.cooker.model.Lists
+import com.example.cooker.model.List
 import com.example.cooker.other.managers.FirebaseManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class ItemsAdapter(private val list: Lists,
+class ItemsAdapter(private val list: List,
                    private val currentUserEmail: String,
                    private val context: Context,
                    val updateImage: (Item) -> Unit, // unit is like void
@@ -29,7 +29,7 @@ class ItemsAdapter(private val list: Lists,
 
     private var i = 0 // help to scan all dataList and print items to the correct list
     private var dataList = emptyList<Item>()
-    fun setList(itemList: List<Item>) {
+    fun setList(itemList: kotlin.collections.List<Item>) {
         this.dataList = itemList
         notifyDataSetChanged()
     }

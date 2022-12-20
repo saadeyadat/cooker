@@ -10,22 +10,26 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cooker.R
-import com.example.cooker.model.Lists
+import com.example.cooker.model.List
 import com.example.cooker.model.User
 import com.example.cooker.model.database.Repository
 import com.example.cooker.other.managers.FirebaseManager
 import com.example.cooker.view.activities.ItemsActivity
+import com.example.cooker.view.activities.ListsActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class ListsAdapter(private val context: Context, private val user: User): RecyclerView.Adapter<ListsAdapter.ViewHolder>() {
+class ListsAdapter(): RecyclerView.Adapter<ListsAdapter.ViewHolder>() {
 
-    private var lists = mutableListOf<Lists>()
-    fun setList(list: MutableList<Lists>) {
+    private var lists = mutableListOf<List>()
+    lateinit var user: User
+    lateinit var context: Context
+    fun setList(list: MutableList<List>, user1: User, listsActivity: ListsActivity) {
         this.lists = list
+        user = user1
+        context = listsActivity
         notifyDataSetChanged()
     }
 

@@ -6,11 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.cooker.model.Converters
-import com.example.cooker.model.Lists
+import com.example.cooker.model.List
 import com.example.cooker.model.Item
 import com.example.cooker.model.User
 
-@Database(entities = arrayOf(Item::class, User::class, Lists::class), version = 1)
+@Database(entities = arrayOf(Item::class, User::class, List::class), version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
 

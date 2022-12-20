@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -20,7 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.viewModelScope
 import com.example.cooker.R
-import com.example.cooker.model.Lists
+import com.example.cooker.model.List
 import com.example.cooker.model.User
 import com.example.cooker.model.database.Repository
 import com.example.cooker.other.adapters.ListsAdapter
@@ -42,6 +43,7 @@ class ListsActivity : AppCompatActivity() {
     private val listsViewModel: ListsViewModel by viewModels()
     private val usersViewModel: UsersViewModel by viewModels()
     lateinit var toggle: ActionBarDrawerToggle
+    private val adapter = ListsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +59,7 @@ class ListsActivity : AppCompatActivity() {
                     listsRecyclerView(user)
                     addNewList(user)
                     setMenuBar(user)
+                    searchBar(user)
                 }
         }
     }
@@ -119,13 +122,12 @@ class ListsActivity : AppCompatActivity() {
     //-------------------- lists RecyclerView --------------------//
 
     private fun listsRecyclerView(user: User) {
-        val adapter = ListsAdapter(this, user)
         listsRecyclerView?.adapter = adapter
-        listsViewModel.listsData.observe(this) { adapter.setList(setUserLists(it, user)) }
+        listsViewModel.listsData.observe(this) { adapter.setList(setUserLists(it, user), user, this) }
     }
 
-    private fun setUserLists(allLists: List<Lists>, user: User): MutableList<Lists> {
-        var userLists = mutableListOf<Lists>()
+    private fun setUserLists(allLists: kotlin.collections.List<List>, user: User): MutableList<List> {
+        var userLists = mutableListOf<List>()
         for (list in allLists) {
             var flag = 0
             for (userList in userLists)
@@ -140,6 +142,35 @@ class ListsActivity : AppCompatActivity() {
         return userLists
     }
 
+
+    //-------------------- Search Bar --------------------//
+
+    private fun searchBar(user: User) {
+        search.clearFocus()
+        search.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterLists(newText, user)
+                return true
+            }
+
+        })
+    }
+
+    private fun filterLists(newText: String?, user: User) {
+        val filteredLists = mutableListOf<List>()
+        var userLists = mutableListOf<List>()
+        listsViewModel.listsData.observe(this) { userLists = setUserLists(it, user) }
+        for (list in userLists)
+            if (list.name.toLowerCase().contains(newText!!))
+                filteredLists.add(list)
+        if (filteredLists.isEmpty())
+            Toast.makeText(this, "No Lists Found", Toast.LENGTH_SHORT).show()
+        adapter.setList(filteredLists, user, this)
+
+    }
 
     //-------------------- menu methods --------------------//
 

@@ -3,7 +3,7 @@ package com.example.cooker.other.managers
 import android.content.Context
 import android.net.Uri
 import com.example.cooker.model.Item
-import com.example.cooker.model.Lists
+import com.example.cooker.model.List
 import com.example.cooker.model.User
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -38,15 +38,15 @@ class FirebaseManager private constructor(val context: Context) {
     }
 
     //------------- Lists Functions -------------//
-    fun addList(list: Lists) {
+    fun addList(list: List) {
         fireStore.collection("Lists").document(list.name.split("-")[1]).set(list)
     }
 
-    fun deleteList(list: Lists) {
+    fun deleteList(list: List) {
         fireStore.collection("Lists").document(list.name.split("-")[1]).delete()
     }
 
-    fun updateListParticipants(list: Lists) {
+    fun updateListParticipants(list: List) {
         fireStore.collection("Lists").document(list.name.split("-")[1]).update("participants", list.participants)
     }
 
