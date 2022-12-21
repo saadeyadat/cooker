@@ -23,11 +23,11 @@
             android:layout_marginTop="10dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="90dp"
-            android:textColor="@color/white"
+            android:background="@drawable/searchview_background"
             app:layout_constraintTop_toTopOf="parent"
             android:queryHint="Search..."
-            android:iconifiedByDefault="false"
-            android:background="@drawable/searchview_background"/>
+            android:textColor="@color/white"
+            android:iconifiedByDefault="false" />
 
         <ImageButton
             android:id="@+id/filter"
