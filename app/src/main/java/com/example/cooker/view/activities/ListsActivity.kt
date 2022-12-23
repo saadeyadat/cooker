@@ -6,16 +6,18 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
+import android.view.View
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -27,6 +29,7 @@ import com.example.cooker.model.database.Repository
 import com.example.cooker.other.adapters.ListsAdapter
 import com.example.cooker.other.managers.ImagesManager
 import com.example.cooker.other.service.ItemService
+import com.example.cooker.view.fragments.FilterFragment
 import com.example.cooker.view.fragments.NewListFragment
 import com.example.cooker.viewModel.ListsViewModel
 import com.example.cooker.viewModel.UsersViewModel
@@ -43,23 +46,27 @@ class ListsActivity : AppCompatActivity() {
     private val listsViewModel: ListsViewModel by viewModels()
     private val usersViewModel: UsersViewModel by viewModels()
     lateinit var toggle: ActionBarDrawerToggle
-    private val adapter = ListsAdapter()
+    val adapter = ListsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.lists_activity)
         val userEmail = intent.extras!!.getString("userEmail")
-        setUser(userEmail!!)
+        var filterListsStr = intent.getStringExtra("filter")
+        if (filterListsStr == null)
+            filterListsStr = ""
+        setUser(userEmail!!, filterListsStr!!)
     }
 
-    private fun setUser(userEmail: String) {
+    private fun setUser(userEmail: String, filterListsStr: String) {
         usersViewModel.usersData.observe(this) {
             for (user in it)
                 if (user.email == userEmail) {
-                    listsRecyclerView(user)
+                    listsRecyclerView(user, filterListsStr)
                     addNewList(user)
                     setMenuBar(user)
                     searchBar(user)
+                    filterBar(user)
                 }
         }
     }
@@ -67,19 +74,24 @@ class ListsActivity : AppCompatActivity() {
     private fun setMenuBar(user: User) {
         val drawer: DrawerLayout = findViewById(R.id.lists_drawer_layout)
         val menu: NavigationView = findViewById(R.id.menu)
+        val header: View = menu.getHeaderView(0)
 
         toggle = ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close)
         drawer.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val userName = header.findViewById<TextView>(R.id.menu_user_name)
+        val userEmail = header.findViewById<TextView>(R.id.menu_user_email)
+        val userImage = header.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.menu_user_image)
 
-        menu_user_name.text = user.name
-        menu_user_email.text = user.email
+        userName.text = user.name
+        userEmail.text = user.email
+
         if (user.image!!.isNotEmpty())
             menu_user_image.setImageURI(Uri.parse(user.image))
 
-        menu_user_image.setOnClickListener { addUserImage(user) }
+        userImage.setOnClickListener { addUserImage(user) }
 
         menu.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -121,9 +133,12 @@ class ListsActivity : AppCompatActivity() {
 
     //-------------------- lists RecyclerView --------------------//
 
-    private fun listsRecyclerView(user: User) {
+    private fun listsRecyclerView(user: User, filterListsStr: String) {
         listsRecyclerView?.adapter = adapter
-        listsViewModel.listsData.observe(this) { adapter.setList(setUserLists(it, user), user, this) }
+        if (filterListsStr == "")
+            listsViewModel.listsData.observe(this) { adapter.setList(setUserLists(it, user), user, this) }
+        else
+            showFilteredLists(user, filterListsStr)
     }
 
     private fun setUserLists(allLists: kotlin.collections.List<List>, user: User): MutableList<List> {
@@ -152,14 +167,14 @@ class ListsActivity : AppCompatActivity() {
                 return false
             }
             override fun onQueryTextChange(newText: String?): Boolean {
-                filterLists(newText, user)
+                filterSearchLists(newText, user)
                 return true
             }
 
         })
     }
 
-    private fun filterLists(newText: String?, user: User) {
+    private fun filterSearchLists(newText: String?, user: User) {
         val filteredLists = mutableListOf<List>()
         var userLists = mutableListOf<List>()
         listsViewModel.listsData.observe(this) { userLists = setUserLists(it, user) }
@@ -171,6 +186,35 @@ class ListsActivity : AppCompatActivity() {
         adapter.setList(filteredLists, user, this)
 
     }
+
+
+    //-------------------- Search Bar --------------------//
+
+    private fun filterBar(user: User) {
+        var userLists = mutableListOf<List>()
+        listsViewModel.listsData.observe(this) {
+            userLists = setUserLists(it, user)
+        }
+        filter.setOnClickListener {
+            val filterFragment = FilterFragment(user, userLists)
+            supportFragmentManager.beginTransaction().replace(R.id.new_list_fragment, filterFragment).commit()
+        }
+    }
+
+    private fun showFilteredLists(user: User, filterListsStr: String) {
+        val filterListsArr = filterListsStr.split(',')
+        val filteredLists = mutableListOf<List>()
+        var userLists = mutableListOf<List>()
+        listsViewModel.listsData.observe(this) {
+            userLists = setUserLists(it, user)
+            for (list in userLists)
+                if (filterListsArr.contains(list.name.split('-')[1]))
+                    filteredLists.add(list)
+
+            adapter.setList(filteredLists, user, this)
+        }
+    }
+
 
     //-------------------- menu methods --------------------//
 
@@ -187,9 +231,6 @@ class ListsActivity : AppCompatActivity() {
         this.finish()
     }
 
-    private fun showAllUsers() {
-        usersViewModel.usersData.observe(this) {}
-    }
 
     /* ---------------- Camera Images Update ---------------- */
 

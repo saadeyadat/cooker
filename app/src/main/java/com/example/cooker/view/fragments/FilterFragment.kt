@@ -1,36 +1,45 @@
 package com.example.cooker.view.fragments
 
-import android.content.Context
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.example.cooker.R
 import com.example.cooker.model.List
 import com.example.cooker.model.User
-import com.example.cooker.model.database.Repository
-import com.example.cooker.other.managers.FirebaseManager
+import com.example.cooker.view.activities.ListsActivity
 import kotlinx.android.synthetic.main.item_fragment_info.add_button
 import kotlinx.android.synthetic.main.item_fragment_info.exit_button2
 import kotlinx.android.synthetic.main.new_list_fragment.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
-class NewListFragment(private val user: User, context: Context): Fragment(R.layout.new_list_fragment) {
+
+class FilterFragment(private val user: User, private val userLists: MutableList<List>) : Fragment(R.layout.filter_fragment) {
 
     private var parameters = ""
+    private val filteredLists = mutableListOf<List>()
     override fun onResume() {
         super.onResume()
         readSwitches()
         add_button?.setOnClickListener {
-            val list = list_name.text.toString()
-            GlobalScope.launch {
-                Repository.getInstance(context).addUserList(user, list)
-                Repository.getInstance(context).addList(List("${user.email}-$list", "${user.email}-${user.name}", parameters))
-                //FirebaseManager.getInstance(requireContext()).addList(List("${user.email}-$list", "${user.email}-${user.name}"))
-                //NotificationsManager.newList(requireContext(), user.name)
+            if (parameters != "") {
+                val filterParamArr = parameters.split(',')
+                val allLists = userLists
+                for (list in allLists) {
+                    val listParamArr = list.parameters.split(',')
+                    for (listParam in listParamArr)
+                        if (filterParamArr.contains(listParam) && listParam!="")
+                            if (!filteredLists.contains(list))
+                                filteredLists.add(list)
+                }
             }
-            list_name?.setText("")
+            var filterListsStr = ""
+            if (filteredLists.isNotEmpty())
+                for (list in filteredLists)
+                    filterListsStr += "${list.name.split('-')[1]},"
+            val intent = Intent(requireActivity().baseContext, ListsActivity::class.java)
+            intent.putExtra("userEmail", user.email)
+            intent.putExtra("filter", filterListsStr)
+            requireActivity().startActivity(intent)
             parentFragmentManager.beginTransaction().remove(this).commit()
         }
-
         exit_button2?.setOnClickListener {
             parentFragmentManager.beginTransaction().remove(this).commit()
         }

@@ -9,6 +9,7 @@ import java.io.Serializable
 data class List(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "owner") val owner: String,
+    @ColumnInfo(name = "parameters") val parameters: String,
     @ColumnInfo(name = "image") var image: String? = "",
     @ColumnInfo(name = "participants") var participants: String? = ""
 ) : Serializable {
