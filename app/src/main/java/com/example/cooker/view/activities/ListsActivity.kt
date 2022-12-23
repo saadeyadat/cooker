@@ -40,13 +40,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import kotlin.concurrent.thread
+import kotlin.properties.Delegates
 
 class ListsActivity : AppCompatActivity() {
 
     private val listsViewModel: ListsViewModel by viewModels()
     private val usersViewModel: UsersViewModel by viewModels()
     lateinit var toggle: ActionBarDrawerToggle
-    val adapter = ListsAdapter()
+    private val adapter = ListsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -233,9 +234,9 @@ class ListsActivity : AppCompatActivity() {
 
     /* ---------------- Camera Images Update ---------------- */
 
-    var allowCamera = false
-    var allowResult = false
-    var currentActivity = this
+    private var allowCamera = false
+    private var allowResult = false
+    private var currentActivity = this
     private var currentUser: User? = null
     private val userContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val uri = result.data?.data

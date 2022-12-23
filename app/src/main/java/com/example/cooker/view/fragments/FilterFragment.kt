@@ -36,6 +36,7 @@ class FilterFragment(private val user: User, private val userLists: MutableList<
             val intent = Intent(requireActivity().baseContext, ListsActivity::class.java)
             intent.putExtra("userEmail", user.email)
             intent.putExtra("filter", filterListsStr)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             requireActivity().startActivity(intent)
             parentFragmentManager.beginTransaction().remove(this).commit()
         }
