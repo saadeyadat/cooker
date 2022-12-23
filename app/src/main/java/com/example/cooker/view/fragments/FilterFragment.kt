@@ -21,8 +21,7 @@ class FilterFragment(private val user: User, private val userLists: MutableList<
         add_button?.setOnClickListener {
             if (parameters != "") {
                 val filterParamArr = parameters.split(',')
-                val allLists = userLists
-                for (list in allLists) {
+                for (list in userLists) {
                     val listParamArr = list.parameters.split(',')
                     for (listParam in listParamArr)
                         if (filterParamArr.contains(listParam) && listParam!="")

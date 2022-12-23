@@ -210,7 +210,6 @@ class ListsActivity : AppCompatActivity() {
             for (list in userLists)
                 if (filterListsArr.contains(list.name.split('-')[1]))
                     filteredLists.add(list)
-
             adapter.setList(filteredLists, user, this)
         }
     }
