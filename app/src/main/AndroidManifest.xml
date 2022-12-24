@@ -35,6 +35,9 @@
         <activity
             android:name=".view.activities.ItemsActivity"
             android:exported="false" />
+        <activity
+            android:name=".view.activities.AboutActivity"
+            android:exported="false" />
 
         <service
             android:name="com.example.cooker.other.service.ItemService"

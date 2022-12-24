@@ -40,7 +40,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import kotlin.concurrent.thread
-import kotlin.properties.Delegates
 
 class ListsActivity : AppCompatActivity() {
 
@@ -96,6 +95,7 @@ class ListsActivity : AppCompatActivity() {
 
         menu.setNavigationItemSelectedListener {
             when (it.itemId) {
+                R.id.about -> about()
                 R.id.logout -> logout()
             }
             true
@@ -198,7 +198,7 @@ class ListsActivity : AppCompatActivity() {
         }
         filter.setOnClickListener {
             val filterFragment = FilterFragment(user, userLists)
-            supportFragmentManager.beginTransaction().replace(R.id.new_list_fragment, filterFragment).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.filter_fragment, filterFragment).commit()
         }
     }
 
@@ -223,6 +223,11 @@ class ListsActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun about() {
+        val intent = Intent(this, AboutActivity::class.java)
+        startActivity(intent)
     }
 
     private fun logout() {
