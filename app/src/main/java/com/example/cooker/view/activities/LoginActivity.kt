@@ -123,7 +123,7 @@ class LoginActivity : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(googleSignInAccount.idToken, null)
         firebase.signInWithCredential(credential)
             .addOnSuccessListener {
-                val user = User(googleSignInAccount.email.toString(), "Google Password", googleSignInAccount.givenName.toString())
+                val user = User(googleSignInAccount.email.toString(), "Google Password", googleSignInAccount.givenName.toString(), "beginner")
                 FirebaseManager.getInstance(this).addUser(user)
                 openApp(googleSignInAccount.email.toString())
             }
@@ -131,7 +131,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun regToSharedPref(googleSignInAccount: GoogleSignInAccount) {
-        val user = User(googleSignInAccount.email.toString(), "Google Password", googleSignInAccount.givenName.toString())
+        val user = User(googleSignInAccount.email.toString(), "Google Password", googleSignInAccount.givenName.toString(), "beginner")
         SharedPrefManager.getInstance(this).setUser(user)
     }
 
@@ -139,7 +139,7 @@ class LoginActivity : AppCompatActivity() {
         val name = googleSignInAccount.givenName.toString()
         val email = googleSignInAccount.email.toString()
         val context = this
-        GlobalScope.launch { Repository.getInstance(context).addUser(User(email, "Google Password", name)) }
+        GlobalScope.launch { Repository.getInstance(context).addUser(User(email, "Google Password", name, "beginner")) }
     }
 
     private fun displayToast(text: String) {

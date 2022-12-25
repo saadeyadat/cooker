@@ -18,9 +18,7 @@ import kotlinx.coroutines.launch
 
 class SignupFragment(private val sharedPreferences: SharedPreferences, context: Context) : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle? ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
         return inflater.inflate(R.layout.signup_fragment, container, false)
     }
 
@@ -31,15 +29,35 @@ class SignupFragment(private val sharedPreferences: SharedPreferences, context: 
     }
 
     private fun createUser() {
+        val name = signup_name?.text.toString()
+        val type = readSwitch()
         val email = signup_email?.text.toString()
         val password1 = signup_password1?.text.toString()
         val password2 = signup_password2?.text.toString()
-        if (checkUsername(email) && checkPassword(password1, password2)) {
+        if (checkName(name) && checkUsername(email) && checkPassword(password1, password2)) {
             regToShared()
-            regToDatabase()
-            regToFirebase()
+            regToDatabase(name, type, email, password1)
+            regToFirebase(name, type, email, password1)
             parentFragmentManager.beginTransaction().remove(this).commit()
         }
+    }
+
+    private fun readSwitch(): String {
+        var type = ""
+        type_switch.setOnCheckedChangeListener { _, onSwtich ->
+            if (onSwtich)
+                type = "master"
+            else
+                type = "beginner"
+        }
+        return type
+    }
+
+    private fun checkName(name: String): Boolean {
+        if (name.isNotEmpty())
+            return true
+        Toast.makeText(requireContext(), "Please Enter Valid Name.", Toast.LENGTH_SHORT).show()
+        return false
     }
 
     private fun checkUsername(email: String): Boolean {
@@ -69,17 +87,11 @@ class SignupFragment(private val sharedPreferences: SharedPreferences, context: 
         PrefEdit.putInt("usersNumber", usersNumber).apply()
     }
 
-    private fun regToDatabase() {
-        val email = signup_email?.text.toString()
-        val password = signup_password1?.text.toString()
-        val name = signup_email?.text.toString().split('@')[0]
-        GlobalScope.launch { Repository.getInstance(context).addUser(User(email, password, name)) }
+    private fun regToDatabase(name: String, type: String, email: String, password: String) {
+        GlobalScope.launch { Repository.getInstance(context).addUser(User(email, password, name, type)) }
     }
 
-    private fun regToFirebase() {
-        val email = signup_email?.text.toString()
-        val password = signup_password1?.text.toString()
-        val name = signup_email?.text.toString().split('@')[0]
-        FirebaseManager.getInstance(requireContext()).addUser(User(email, password, name))
+    private fun regToFirebase(name: String, type: String, email: String, password: String) {
+        FirebaseManager.getInstance(requireContext()).addUser(User(email, password, name, type))
     }
 }

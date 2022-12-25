@@ -1,6 +1,7 @@
 package com.example.cooker.view.fragments
 
 import android.content.Context
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.cooker.R
 import com.example.cooker.model.List
@@ -18,7 +19,7 @@ class NewListFragment(private val user: User, context: Context): Fragment(R.layo
     private var parameters = ""
     override fun onResume() {
         super.onResume()
-        readSwitches()
+        readSwitches(user)
         add_button?.setOnClickListener {
             val list = list_name.text.toString()
             GlobalScope.launch {
@@ -36,7 +37,7 @@ class NewListFragment(private val user: User, context: Context): Fragment(R.layo
         }
     }
 
-    private fun readSwitches() {
+    private fun readSwitches(user: User) {
         salad_switch.setOnCheckedChangeListener { _, onSwtich ->
             if (onSwtich)
                 parameters += "Salad,"
@@ -84,6 +85,36 @@ class NewListFragment(private val user: User, context: Context): Fragment(R.layo
                 for (param in paramArr)
                     parameters += param
             }
+        }
+        home_made.setOnCheckedChangeListener { _, onSwtich ->
+            if (user.type == "master")
+                if (onSwtich)
+                    parameters += "Shakes,"
+                else {
+                    val paramArr: MutableList<String> = parameters.split(',') as MutableList<String>
+                    parameters = ""
+                    if (paramArr.contains("Shakes"))
+                        paramArr.remove("Shakes")
+                    for (param in paramArr)
+                        parameters += param
+                }
+            else
+                Toast.makeText(requireContext(), "Master Only Allowed to add this recipe type.", Toast.LENGTH_SHORT).show()
+        }
+        events_food.setOnCheckedChangeListener { _, onSwtich ->
+            if (user.type == "master")
+                if (onSwtich)
+                    parameters += "Shakes,"
+                else {
+                    val paramArr: MutableList<String> = parameters.split(',') as MutableList<String>
+                    parameters = ""
+                    if (paramArr.contains("Shakes"))
+                        paramArr.remove("Shakes")
+                    for (param in paramArr)
+                        parameters += param
+                }
+            else
+                Toast.makeText(requireContext(), "Master Only Allowed to add this recipe type.", Toast.LENGTH_SHORT).show()
         }
     }
 }

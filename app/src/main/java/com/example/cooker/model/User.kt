@@ -13,6 +13,8 @@ data class User (
     var password: String,
     @ColumnInfo(name = "name")
     var name: String,
+    @ColumnInfo(name = "type")
+    var type: String,
     @ColumnInfo(name = "lists")
     var lists: String? = "",
     @ColumnInfo(name = "image")

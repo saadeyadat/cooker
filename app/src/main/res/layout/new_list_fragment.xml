@@ -25,6 +25,7 @@
             android:layout_width="200dp"
             android:layout_height="20dp"
             android:text="Enter Meal Name: "
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/list_name" />
@@ -41,53 +42,95 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Switch
-            android:id="@+id/salad_switch"
-            android:layout_width="150dp"
+        <LinearLayout
+            android:id="@+id/switches12"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Salad"
-            android:textColor="#EAE2E2"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/list_name"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
+            tools:ignore="MissingConstraints">
 
-        <Switch
-            android:id="@+id/BBQ_switch"
-            android:layout_width="150dp"
+            <Switch
+                android:id="@+id/salad_switch"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="Salad"
+                android:textColor="#EAE2E2"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <Switch
+                android:id="@+id/BBQ_switch"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="BBQ"
+                android:textColor="#EAE2E2"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/switches34"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="BBQ"
-            android:textColor="#EAE2E2"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/salad_switch"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
+            app:layout_constraintTop_toBottomOf="@+id/switches12"
+            tools:ignore="MissingConstraints">
 
-        <Switch
-            android:id="@+id/fastFood_switch"
-            android:layout_width="150dp"
+            <Switch
+                android:id="@+id/fastFood_switch"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="Fast"
+                android:textColor="#EAE2E2"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <Switch
+                android:id="@+id/shakes_switch"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="Shakes"
+                android:textColor="#EAE2E2"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/switches56"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Fast Food"
-            android:textColor="#EAE2E2"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/BBQ_switch"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
+            app:layout_constraintTop_toBottomOf="@+id/switches34"
+            tools:ignore="MissingConstraints">
 
-        <Switch
-            android:id="@+id/shakes_switch"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Shakes"
-            android:textColor="#EAE2E2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fastFood_switch"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
+            <Switch
+                android:id="@+id/home_made"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="Home (Master)"
+                android:textColor="#EAE2E2"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <Switch
+                android:id="@+id/events_food"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="Events (Master)"
+                android:textColor="#EAE2E2"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/add_button"
