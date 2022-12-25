@@ -43,7 +43,7 @@ class FirebaseManager private constructor(val context: Context) {
     }
 
     fun deleteList(list: List) {
-        fireStore.collection("Lists").document(list.name.split("-")[1]).delete()
+        //fireStore.collection("Lists").document(list.name.split("-")[1]).delete()
     }
 
     fun updateListParticipants(list: List) {

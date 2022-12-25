@@ -63,6 +63,7 @@ class ListsActivity : AppCompatActivity() {
             for (user in it)
                 if (user.email == userEmail) {
                     listsRecyclerView(user, filterListsStr)
+                    cameraPermission(user)
                     addNewList(user)
                     setMenuBar(user)
                     searchBar(user)
@@ -82,11 +83,13 @@ class ListsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val userName = header.findViewById<TextView>(R.id.menu_user_name)
+        val userType = header.findViewById<TextView>(R.id.menu_user_type)
         val userEmail = header.findViewById<TextView>(R.id.menu_user_email)
         val userImage = header.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.menu_user_image)
 
         userName.text = user.name
         userEmail.text = user.email
+        userType.text = user.type
 
         if (user.image!!.isNotEmpty())
             menu_user_image.setImageURI(Uri.parse(user.image))
@@ -109,8 +112,7 @@ class ListsActivity : AppCompatActivity() {
         }
     }
 
-    private fun addUserImage(user: User) {
-
+    private fun cameraPermission(user: User) {
         currentUser = user
         if (ActivityCompat.checkSelfPermission(currentActivity, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)  {
             ActivityCompat.requestPermissions(currentActivity, arrayOf(android.Manifest.permission.CAMERA), 111)
@@ -120,7 +122,9 @@ class ListsActivity : AppCompatActivity() {
             allowCamera = true
             allowResult = true
         }
+    }
 
+    private fun addUserImage(user: User) {
         if (allowResult) {
             if (allowCamera)
                 cameraAlert(this)

@@ -18,19 +18,20 @@ import kotlinx.coroutines.launch
 
 class SignupFragment(private val sharedPreferences: SharedPreferences, context: Context) : Fragment() {
 
+    private var type = "beginner"
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
         return inflater.inflate(R.layout.signup_fragment, container, false)
     }
 
     override fun onStart() {
         super.onStart()
+        readSwitch()
         signup_button.setOnClickListener { createUser() }
         signin_text.setOnClickListener { parentFragmentManager.beginTransaction().remove(this).commit() }
     }
 
     private fun createUser() {
         val name = signup_name?.text.toString()
-        val type = readSwitch()
         val email = signup_email?.text.toString()
         val password1 = signup_password1?.text.toString()
         val password2 = signup_password2?.text.toString()
@@ -42,15 +43,13 @@ class SignupFragment(private val sharedPreferences: SharedPreferences, context: 
         }
     }
 
-    private fun readSwitch(): String {
-        var type = ""
+    private fun readSwitch() {
         type_switch.setOnCheckedChangeListener { _, onSwtich ->
             if (onSwtich)
                 type = "master"
             else
                 type = "beginner"
         }
-        return type
     }
 
     private fun checkName(name: String): Boolean {

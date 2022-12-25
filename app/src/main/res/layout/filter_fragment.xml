@@ -25,7 +25,7 @@
             android:id="@+id/title_text"
             android:layout_width="200dp"
             android:layout_height="20dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
             android:text="Select Meal Type"
             android:textStyle="bold"
             android:gravity="center"
@@ -123,15 +123,32 @@
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/add_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+        <LinearLayout
+            android:id="@+id/buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/ok"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints">
+
+            <ImageButton
+                android:id="@+id/add_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/ok" />
+
+            <ImageButton
+                android:id="@+id/reset_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/reset" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

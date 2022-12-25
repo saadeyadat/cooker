@@ -115,7 +115,7 @@
 
             <Switch
                 android:id="@+id/home_made"
-                android:layout_width="110dp"
+                android:layout_width="101dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:text="Home (Master)"
@@ -124,13 +124,24 @@
 
             <Switch
                 android:id="@+id/events_food"
-                android:layout_width="110dp"
+                android:layout_width="101dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:text="Events (Master)"
                 android:textColor="#EAE2E2"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="'Master' Meals Open For Master Chefs Only."
+            android:textColor="#DC1304"
+            android:textSize="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switches56"
+            tools:ignore="MissingConstraints" />
 
         <ImageButton
             android:id="@+id/add_button"
