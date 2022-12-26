@@ -2,6 +2,7 @@ package com.example.cooker.view.activities
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -23,6 +24,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.login_activity.*
+import kotlinx.android.synthetic.main.login_activity.login_bottom_menu1
+import kotlinx.android.synthetic.main.login_activity.signup_bottom_menu1
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -36,6 +39,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
+        //supportFragmentManager.beginTransaction().replace(R.id.signup_fragment, SignupFragment(this)).commit()
+        setBottomMenu()
         setGoogleContent()
         setSharedPref()
         lastSigning()
@@ -62,9 +67,6 @@ class LoginActivity : AppCompatActivity() {
     private fun signInButtons() {
         regular_signin.setOnClickListener { regularSignIn() }
         //google_signin.setOnClickListener { googleSignIn() }
-        goto_signup.setOnClickListener {
-            supportFragmentManager.beginTransaction().replace(R.id.signup_fragment, SignupFragment(sharedPreferences, this)).commit()
-        }
     }
 
     private fun regularSignIn() {
@@ -87,7 +89,7 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    /*--------------------------FireBase---------------------------*/
+    /*-------------------------- FireBase ---------------------------*/
 
     private fun googleSignIn() {
         val googleOptions = GoogleSignInOptions
@@ -145,4 +147,18 @@ class LoginActivity : AppCompatActivity() {
     private fun displayToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     }
+
+
+    /*-------------------------- Bottom Menu ---------------------------*/
+
+    fun setBottomMenu() {
+        signup_bottom_menu1.setTextColor(Color.parseColor("#000000"))
+        login_bottom_menu1.setTextColor(Color.parseColor("#0835C5"))
+        signup_bottom_menu1.setOnClickListener {
+            signup_bottom_menu1.setTextColor(Color.parseColor("#0835C5"))
+            login_bottom_menu1.setTextColor(Color.parseColor("#000000"))
+            supportFragmentManager.beginTransaction().replace(R.id.signup_fragment, SignupFragment(this)).commit()
+        }
+    }
+
 }

@@ -1,22 +1,23 @@
 package com.example.cooker.view.fragments
 
 import android.content.Context
-import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.cooker.R
 import com.example.cooker.model.User
 import com.example.cooker.model.database.Repository
 import com.example.cooker.other.managers.FirebaseManager
+import com.example.cooker.view.activities.LoginActivity
 import kotlinx.android.synthetic.main.signup_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class SignupFragment(private val sharedPreferences: SharedPreferences, context: Context) : Fragment() {
+class SignupFragment(context: Context) : Fragment() {
 
     private var type = "beginner"
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
@@ -25,9 +26,9 @@ class SignupFragment(private val sharedPreferences: SharedPreferences, context: 
 
     override fun onStart() {
         super.onStart()
+        setBottomMenu()
         readSwitch()
         signup_button.setOnClickListener { createUser() }
-        signin_text.setOnClickListener { parentFragmentManager.beginTransaction().remove(this).commit() }
     }
 
     private fun createUser() {
@@ -36,9 +37,9 @@ class SignupFragment(private val sharedPreferences: SharedPreferences, context: 
         val password1 = signup_password1?.text.toString()
         val password2 = signup_password2?.text.toString()
         if (checkName(name) && checkUsername(email) && checkPassword(password1, password2)) {
-            regToShared()
             regToDatabase(name, type, email, password1)
             regToFirebase(name, type, email, password1)
+            (activity as LoginActivity?)!!.setBottomMenu()
             parentFragmentManager.beginTransaction().remove(this).commit()
         }
     }
@@ -77,20 +78,22 @@ class SignupFragment(private val sharedPreferences: SharedPreferences, context: 
         return false
     }
 
-    private fun regToShared() {
-        var usersNumber = sharedPreferences.getInt("usersNumber", -1)
-        val PrefEdit = sharedPreferences.edit()
-        usersNumber++
-        PrefEdit.putString("username+${usersNumber}", signup_email?.text.toString()).apply()
-        PrefEdit.putString("password+${usersNumber}", signup_password1?.text.toString()).apply()
-        PrefEdit.putInt("usersNumber", usersNumber).apply()
-    }
-
     private fun regToDatabase(name: String, type: String, email: String, password: String) {
         GlobalScope.launch { Repository.getInstance(context).addUser(User(email, password, name, type)) }
     }
 
     private fun regToFirebase(name: String, type: String, email: String, password: String) {
         FirebaseManager.getInstance(requireContext()).addUser(User(email, password, name, type))
+    }
+
+    private fun setBottomMenu() {
+        signup_bottom_menu2.setTextColor(Color.parseColor("#0835C5"))
+        login_bottom_menu2.setTextColor(Color.parseColor("#000000"))
+        login_bottom_menu2.setOnClickListener {
+            signup_bottom_menu2.setTextColor(Color.parseColor("#000000"))
+            login_bottom_menu2.setTextColor(Color.parseColor("#0835C5"))
+            (activity as LoginActivity?)!!.setBottomMenu()
+            parentFragmentManager.beginTransaction().remove(this).commit()
+        }
     }
 }

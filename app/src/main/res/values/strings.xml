@@ -2,4 +2,7 @@
     <string name="app_name">Cooker</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="filter">Filter</string>
+    <string name="add">Add</string>
+    <string name="footer">© All Rights Reserved 2023</string>
 </resources>

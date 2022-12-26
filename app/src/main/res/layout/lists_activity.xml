@@ -23,7 +23,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="90dp"
-            android:background="@drawable/searchview_background"
+            android:background="@drawable/search_view_background"
             app:layout_constraintTop_toTopOf="parent"
             android:queryHint="Search..."
             android:textColor="@color/white"
@@ -35,6 +35,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="30dp"
+            android:contentDescription="@string/filter"
             android:background="@drawable/filter"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,6 +60,7 @@
             android:layout_height="60dp"
             android:layout_margin="20dp"
             android:background="@drawable/add"
+            android:contentDescription="@string/add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -85,13 +87,14 @@
             android:id="@+id/footer"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:text="© All Rights Reserved 2023"
+            android:text="@string/footer"
             android:gravity="center"
-            android:textSize="10dp"
+            android:textSize="10sp"
             android:textColor="@color/white"
             android:background="@color/purple_700"
             app:layout_constraintTop_toBottomOf="@+id/add_list"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="SmallSp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
