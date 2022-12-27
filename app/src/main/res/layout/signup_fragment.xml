@@ -102,7 +102,7 @@
             android:textStyle="bold"
             android:gravity="center"/>
         <View
-            android:layout_width="1dp"
+            android:layout_width="2dp"
             android:layout_height="16dp"
             android:background="@color/black" />
         <TextView

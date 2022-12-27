@@ -95,9 +95,9 @@
             android:textStyle="bold"
             android:gravity="center"/>
         <View
-            android:layout_width="1dp"
+            android:layout_width="2dp"
             android:layout_height="16dp"
-            android:background="@color/gray" />
+            android:background="@color/black" />
         <TextView
             android:id="@+id/signup_bottom_menu1"
             android:layout_width="205dp"
