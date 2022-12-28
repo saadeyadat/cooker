@@ -84,6 +84,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
         android:background="@color/gray"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent" >
@@ -107,5 +108,16 @@
             android:gravity="center" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="@string/footer"
+        android:gravity="center"
+        android:textSize="10sp"
+        android:textColor="@color/white"
+        android:background="@color/purple_700"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="SmallSp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

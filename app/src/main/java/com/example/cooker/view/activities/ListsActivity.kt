@@ -94,10 +94,11 @@ class ListsActivity : AppCompatActivity() {
         if (user.image!!.isNotEmpty())
             menu_user_image.setImageURI(Uri.parse(user.image))
 
-        userImage.setOnClickListener { addUserImage(user) }
+        userImage.setOnClickListener { addUserImage() }
 
         menu.setNavigationItemSelectedListener {
             when (it.itemId) {
+                R.id.users -> users()
                 R.id.about -> about()
                 R.id.logout -> logout()
             }
@@ -124,7 +125,7 @@ class ListsActivity : AppCompatActivity() {
         }
     }
 
-    private fun addUserImage(user: User) {
+    private fun addUserImage() {
         if (allowResult) {
             if (allowCamera)
                 cameraAlert(this)
@@ -228,6 +229,10 @@ class ListsActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun users() {
+        val intent = Intent(this, UsersActivity::class.java)
+        startActivity(intent)    }
 
     private fun about() {
         val intent = Intent(this, AboutActivity::class.java)

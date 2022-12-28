@@ -209,4 +209,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filter_search" />
 
+    <TextView
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="@string/footer"
+        android:gravity="center"
+        android:textSize="10sp"
+        android:textColor="@color/white"
+        android:background="@color/purple_700"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
