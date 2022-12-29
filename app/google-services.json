@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "715374281474",
-    "project_id": "cooker-41ed5",
-    "storage_bucket": "cooker-41ed5.appspot.com"
+    "project_number": "455826977971",
+    "project_id": "cooker-8c855",
+    "storage_bucket": "cooker-8c855.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:715374281474:android:3d6bc34b7540abc493b81b",
+        "mobilesdk_app_id": "1:455826977971:android:d0cda7589dd870c5c82cc6",
         "android_client_info": {
           "package_name": "com.example.cooker"
         }
       },
       "oauth_client": [
         {
-          "client_id": "715374281474-7nhrecpuk032qjmo7ujm6freerdieeva.apps.googleusercontent.com",
+          "client_id": "455826977971-ugjklsq3veuilee17fiso2vabdi0cudm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.cooker",
-            "certificate_hash": "426dbf7e40779611427d1456d14472b5804c1f1a"
+            "certificate_hash": "47531f16ea7a425aa8d2379b09ce9ccee49bb8c9"
           }
         },
         {
-          "client_id": "715374281474-7o2117t1krbapr6ekch4njoq4mvtcbsu.apps.googleusercontent.com",
+          "client_id": "455826977971-tflr43s18ov67nvk605k64j1qv6616b5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDRdLIjZWrhits7koeSGnI-84445yaksHE"
+          "current_key": "AIzaSyBy5JTrEPrYVl4e4CXa18ZYq_0YRX7cBKQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "715374281474-7o2117t1krbapr6ekch4njoq4mvtcbsu.apps.googleusercontent.com",
+              "client_id": "455826977971-tflr43s18ov67nvk605k64j1qv6616b5.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

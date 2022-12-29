@@ -65,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun signInButtons() {
         regular_signin.setOnClickListener { regularSignIn() }
-        //google_signin.setOnClickListener { googleSignIn() }
+        google_signin.setOnClickListener { googleSignIn() }
     }
 
     private fun regularSignIn() {
@@ -94,7 +94,7 @@ class LoginActivity : AppCompatActivity() {
         val googleOptions = GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
-            //.requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken(getString(R.string.default_web_client_id))
             .build()
         val client = GoogleSignIn.getClient(this, googleOptions).signInIntent
         googleContent.launch(client)

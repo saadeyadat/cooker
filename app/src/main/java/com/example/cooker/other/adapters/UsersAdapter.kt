@@ -11,12 +11,6 @@ import com.example.cooker.model.User
 
 class UsersAdapter(private val users: List<User>) : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 
-    /*private var users = listOf<User>()
-    fun setList(allUsers: List<User>) {
-        this.users = allUsers
-        this.notifyDataSetChanged()
-    }*/
-
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val users_table_name: TextView
         val users_table_email: TextView

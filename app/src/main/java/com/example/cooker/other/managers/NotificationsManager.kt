@@ -35,16 +35,6 @@ object NotificationsManager {
         notificationManagerCompat.notify(2, builder.build())
     }
 
-    fun newList(context: Context, user: String) {
-        createNotificationChanel(context)
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setContentTitle("ItemReminder")
-            .setSmallIcon(R.drawable.cart)
-            .setContentText("$user Added New List.")
-        val notificationManagerCompat = NotificationManagerCompat.from(context)
-        notificationManagerCompat.notify(2, builder.build())
-    }
-
     fun background(context: Context): Notification {
         val sendIntent = PendingIntent.getActivity(context, 0, Intent(context, LoginActivity::class.java), PendingIntent.FLAG_MUTABLE)
         createNotificationChanel(context)

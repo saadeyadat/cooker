@@ -8,6 +8,7 @@ import com.example.cooker.model.List
 import com.example.cooker.model.User
 import com.example.cooker.model.database.Repository
 import com.example.cooker.other.managers.FirebaseManager
+import com.example.cooker.other.managers.NotificationsManager
 import kotlinx.android.synthetic.main.new_list_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -24,8 +25,7 @@ class NewListFragment(private val user: User, context: Context): Fragment(R.layo
                 GlobalScope.launch {
                     Repository.getInstance(context).addUserList(user, list)
                     Repository.getInstance(context).addList(List("${user.email}-$list", "${user.email}-${user.name}", parameters))
-                    //FirebaseManager.getInstance(requireContext()).addList(List("${user.email}-$list", "${user.email}-${user.name}"))
-                    //NotificationsManager.newList(requireContext(), user.name)
+                    FirebaseManager.getInstance(requireContext()).addList(List("${user.email}-$list", "${user.email}-${user.name}", parameters))
                 }
             else
                 Toast.makeText(requireContext(), "Please Enter Meal Name.", Toast.LENGTH_SHORT).show()

@@ -18,9 +18,6 @@ class UserDataFragment(private val user: User): Fragment(R.layout.user_data_frag
     override fun onResume() {
         super.onResume()
 
-        val email = requireArguments().getString("userEmail")
-        val image = requireArguments().getString("userImage")
-
         if (user.image!!.isNotEmpty())
             user_data_image.setImageURI(Uri.parse(user.image))
         user_data_email.text = user.email

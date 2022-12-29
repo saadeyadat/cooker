@@ -6,7 +6,6 @@ import com.example.cooker.model.Item
 import com.example.cooker.R
 import com.example.cooker.other.adapters.InfoAdapter
 import com.example.cooker.model.database.Repository
-import kotlinx.android.synthetic.main.filter_fragment.*
 import kotlinx.android.synthetic.main.info_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
