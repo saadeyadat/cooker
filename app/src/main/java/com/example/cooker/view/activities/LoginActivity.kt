@@ -39,7 +39,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
-        //supportFragmentManager.beginTransaction().replace(R.id.signup_fragment, SignupFragment(this)).commit()
         setBottomMenu()
         setGoogleContent()
         setSharedPref()
@@ -157,7 +156,10 @@ class LoginActivity : AppCompatActivity() {
         signup_bottom_menu1.setOnClickListener {
             signup_bottom_menu1.setTextColor(Color.parseColor("#0835C5"))
             login_bottom_menu1.setTextColor(Color.parseColor("#000000"))
-            supportFragmentManager.beginTransaction().replace(R.id.signup_fragment, SignupFragment(this)).commit()
+            usersViewModel.usersData.observe(this) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.signup_fragment, SignupFragment(this, it)).commit()
+            }
         }
     }
 

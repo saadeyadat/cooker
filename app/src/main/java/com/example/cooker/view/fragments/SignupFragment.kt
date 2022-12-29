@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.signup_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class SignupFragment(context: Context) : Fragment() {
+class SignupFragment(context: Context, private val allUsers: List<User>) : Fragment() {
 
     private var type = "beginner"
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
@@ -36,11 +36,10 @@ class SignupFragment(context: Context) : Fragment() {
         val email = signup_email?.text.toString()
         val password1 = signup_password1?.text.toString()
         val password2 = signup_password2?.text.toString()
-        if (checkName(name) && checkUsername(email) && checkPassword(password1, password2)) {
+        if (checkName(name) && checkEmail(email) && checkPassword(password1, password2)) {
             regToDatabase(name, type, email, password1)
             regToFirebase(name, type, email, password1)
-            (activity as LoginActivity?)!!.setBottomMenu()
-            parentFragmentManager.beginTransaction().remove(this).commit()
+            Toast.makeText(requireContext(), "Signup Successfully.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -60,7 +59,12 @@ class SignupFragment(context: Context) : Fragment() {
         return false
     }
 
-    private fun checkUsername(email: String): Boolean {
+    private fun checkEmail(email: String): Boolean {
+        for (user in allUsers)
+            if (user.email == email) {
+                Toast.makeText(requireContext(), "User Already Exist.", Toast.LENGTH_SHORT).show()
+                return false
+            }
         if (email.contains('@') && email.length>7 && email!="")
             return true
         Toast.makeText(requireContext(), "Please Enter Valid Email.", Toast.LENGTH_SHORT).show()
