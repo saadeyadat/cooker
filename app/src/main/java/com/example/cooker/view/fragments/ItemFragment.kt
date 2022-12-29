@@ -10,12 +10,12 @@ import kotlinx.android.synthetic.main.item_fragment.*
 
 class ItemFragment(private val item: Item, context: Context): Fragment(R.layout.item_fragment) {
 
-    private val itemFragmentInfo = ItemFragmentInfo(item, context)
+    private val itemFragmentInfo = InfoFragment(item, context)
     override fun onResume() {
         super.onResume()
 
-        val name = requireArguments().getString("fruitName")
-        val image = requireArguments().getString("fruitImage")
+        val name = requireArguments().getString("itemName")
+        val image = requireArguments().getString("itemImage")
 
         fruit_title?.text = name.toString()
         fruit_image?.setImageURI(Uri.parse(image))

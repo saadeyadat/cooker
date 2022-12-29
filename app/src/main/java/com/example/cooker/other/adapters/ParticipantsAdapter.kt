@@ -7,9 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cooker.R
+import com.example.cooker.model.Item
 import com.example.cooker.model.User
 
-class ParticipantsAdapter(private val participantsList: MutableList<String>, private val usersList: List<User>) : RecyclerView.Adapter<ParticipantsAdapter.ViewHolder>() {
+class ParticipantsAdapter(
+    private val participantsList: MutableList<String>,
+    private val usersList: List<User>,
+    val displayUserDataFragment: (User) -> Unit) : RecyclerView.Adapter<ParticipantsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val participant_image: ImageView
@@ -28,6 +32,13 @@ class ParticipantsAdapter(private val participantsList: MutableList<String>, pri
                 if (participantsList[position] == user.email)
                     if (user.image!!.isNotEmpty())
                         holder.participant_image.setImageURI(Uri.parse(user.image))
+
+        holder.participant_image.setOnClickListener {
+            for (user in usersList)
+                if (participantsList[position].isNotEmpty())
+                    if (participantsList[position] == user.email)
+                        displayUserDataFragment(user)
+        }
     }
 
     override fun getItemCount(): Int {

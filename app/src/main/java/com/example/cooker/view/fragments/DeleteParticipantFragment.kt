@@ -6,7 +6,6 @@ import com.example.cooker.model.List
 import com.example.cooker.model.database.Repository
 import com.example.cooker.other.managers.FirebaseManager
 import kotlinx.android.synthetic.main.delete_participant_fragment.*
-import kotlinx.android.synthetic.main.item_fragment_info.exit_button2
 import kotlinx.android.synthetic.main.new_participant_fragment.participant_name
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

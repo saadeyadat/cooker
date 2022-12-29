@@ -65,7 +65,7 @@ class ItemsAdapter(private val list: List,
             if (currentUserEmail == list.owner.split("-")[0])
                 displayAlert(context, position)
             else
-                Toast.makeText(context, "Only Recipe Owner Allow To Edit This Field.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Only Owner Allowed To Edit This Field.", Toast.LENGTH_SHORT).show()
         }
 
         holder.item_name.setOnClickListener {
@@ -76,7 +76,7 @@ class ItemsAdapter(private val list: List,
             if (currentUserEmail == list.owner.split("-")[0])
                 updateImage(dataList[position])
             else
-                Toast.makeText(context, "Only Recipe Owner Allow To Edit This Field.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Only Owner Allowed To Edit This Field.", Toast.LENGTH_SHORT).show()
         }
     }
 

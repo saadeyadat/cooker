@@ -7,8 +7,6 @@ import com.example.cooker.model.List
 import com.example.cooker.model.User
 import com.example.cooker.view.activities.ListsActivity
 import kotlinx.android.synthetic.main.filter_fragment.*
-import kotlinx.android.synthetic.main.item_fragment_info.add_button
-import kotlinx.android.synthetic.main.item_fragment_info.exit_button2
 import kotlinx.android.synthetic.main.new_list_fragment.*
 import kotlinx.android.synthetic.main.new_list_fragment.BBQ_switch
 import kotlinx.android.synthetic.main.new_list_fragment.events_food
@@ -25,7 +23,7 @@ class FilterFragment(private val user: User, private val userLists: MutableList<
     override fun onResume() {
         super.onResume()
         readSwitches()
-        add_button?.setOnClickListener {
+        filter_add_button?.setOnClickListener {
             if (parameters != "") {
                 val filterParamArr = parameters.split(',')
                 for (list in userLists) {
@@ -58,7 +56,7 @@ class FilterFragment(private val user: User, private val userLists: MutableList<
             requireActivity().startActivity(intent)
         }
 
-        exit_button2?.setOnClickListener {
+        filter_exit_button?.setOnClickListener {
             parentFragmentManager.beginTransaction().remove(this).commit()
         }
     }

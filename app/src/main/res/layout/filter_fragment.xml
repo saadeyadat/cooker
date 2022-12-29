@@ -11,7 +11,7 @@
         android:background="@drawable/circle_shape2">
 
         <ImageButton
-            android:id="@+id/exit_button2"
+            android:id="@+id/filter_exit_button"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
@@ -135,7 +135,7 @@
             tools:ignore="MissingConstraints">
 
             <ImageButton
-                android:id="@+id/add_button"
+                android:id="@+id/filter_add_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"

@@ -8,8 +8,6 @@ import com.example.cooker.model.List
 import com.example.cooker.model.User
 import com.example.cooker.model.database.Repository
 import com.example.cooker.other.managers.FirebaseManager
-import kotlinx.android.synthetic.main.item_fragment_info.add_button
-import kotlinx.android.synthetic.main.item_fragment_info.exit_button2
 import kotlinx.android.synthetic.main.new_list_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

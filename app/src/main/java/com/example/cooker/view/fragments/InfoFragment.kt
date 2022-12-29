@@ -6,11 +6,12 @@ import com.example.cooker.model.Item
 import com.example.cooker.R
 import com.example.cooker.other.adapters.InfoAdapter
 import com.example.cooker.model.database.Repository
-import kotlinx.android.synthetic.main.item_fragment_info.*
+import kotlinx.android.synthetic.main.filter_fragment.*
+import kotlinx.android.synthetic.main.info_fragment.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class ItemFragmentInfo(private val item: Item, context: Context): Fragment(R.layout.item_fragment_info) {
+class InfoFragment(private val item: Item, context: Context): Fragment(R.layout.info_fragment) {
 
     override fun onResume() {
         super.onResume()

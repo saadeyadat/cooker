@@ -29,6 +29,7 @@ import com.example.cooker.view.fragments.ItemFragment
 import com.example.cooker.other.managers.NotificationsManager
 import com.example.cooker.view.fragments.DeleteParticipantFragment
 import com.example.cooker.view.fragments.NewParticipantFragment
+import com.example.cooker.view.fragments.UserDataFragment
 import com.example.cooker.viewModel.ItemsViewModel
 import com.example.cooker.viewModel.ListsViewModel
 import com.example.cooker.viewModel.UsersViewModel
@@ -108,7 +109,7 @@ class ItemsActivity : AppCompatActivity() {
             NotificationsManager.newItem(this, list.name.split("-")[1])
         }
         else
-            Toast.makeText(this, "Only Recipe Owner Allow To Edit This Field.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Only Owner Allowed To Edit This Field.", Toast.LENGTH_SHORT).show()
     }
 
     private fun addParticipant(list: List) {
@@ -121,7 +122,7 @@ class ItemsActivity : AppCompatActivity() {
         if (currentUserEmail == list.owner.split("-")[0])
             supportFragmentManager.beginTransaction().replace(R.id.new_participant_fragment, newParticipantFragment).commit()
         else
-            Toast.makeText(this, "Only Recipe Owner Allow To Edit This Field.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Only Owner Allowed To Edit This Field.", Toast.LENGTH_SHORT).show()
     }
 
     private fun deleteParticipant(list: List) {
@@ -129,7 +130,7 @@ class ItemsActivity : AppCompatActivity() {
         if (currentUserEmail == list.owner.split("-")[0])
             supportFragmentManager.beginTransaction().replace(R.id.delete_participant_fragment, deleteParticipantFragment).commit()
         else
-            Toast.makeText(this, "Only Recipe Owner Allow To Edit This Field.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Only Owner Allowed To Edit This Field.", Toast.LENGTH_SHORT).show()
     }
 
     private fun addUserImage(list: List) {
@@ -157,7 +158,7 @@ class ItemsActivity : AppCompatActivity() {
             }
         }
         else
-            Toast.makeText(this, "Only Recipe Owner Allow To Edit This Field.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Only Owner Allowed To Edit This Field.", Toast.LENGTH_SHORT).show()
     }
 
 
@@ -170,10 +171,17 @@ class ItemsActivity : AppCompatActivity() {
                 for (participant in participants.split("-"))
                     if (participant.length > 2)
                         participantsList.add(participant)
-                val adapter = ParticipantsAdapter(participantsList, it)
+                val adapter = ParticipantsAdapter(participantsList, it) { displayUserDataFragment(it) }
                 participants_recyclerView.adapter = adapter
             }
         }
+    }
+
+    private fun displayUserDataFragment(user: User) {
+        val bundle = bundleOf("userEmail" to user.email, "userImage" to user.image)
+        val userDataFragment = UserDataFragment(user)
+        userDataFragment.arguments = bundle
+        supportFragmentManager.beginTransaction().replace(R.id.user_data_fragment, userDataFragment).commit()
     }
 
     private fun itemsRecyclerView(list: List) {
@@ -183,10 +191,10 @@ class ItemsActivity : AppCompatActivity() {
     }
 
     private fun displayItemFragment(item: Item) {
-        val bundle = bundleOf("fruitName" to item.name, "fruitImage" to item.image)
+        val bundle = bundleOf("itemName" to item.name, "itemImage" to item.image)
         val itemFragment = ItemFragment(item, this)
         itemFragment.arguments = bundle
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_view, itemFragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.info_fragment, itemFragment).commit()
     }
 
     /* ---------------- Gallery Images Update ---------------- */

@@ -141,7 +141,16 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_view"
+            android:id="@+id/user_data_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="100dp" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/info_fragment"
             android:layout_width="300dp"
             android:layout_height="400dp"
             app:layout_constraintTop_toTopOf="parent"
