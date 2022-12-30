@@ -66,8 +66,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun lastSigning() {
         var lastSignin = sharedPreferences.getLong("LAST_LOGIN", -1)
-        val intent = Intent(this, ItemsActivity::class.java)
-        if (lastSignin != -1L && System.currentTimeMillis()-lastSignin < 60000) // 60000 ms = 60 sec
+        val intent = Intent(this, ListsActivity::class.java)
+        if (lastSignin != -1L && System.currentTimeMillis()-lastSignin < 60000)
             startActivity(intent)
     }
 
@@ -96,8 +96,8 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    /*-------------------------- FireBase ---------------------------*/
 
+    /*-------------------------- FireBase ---------------------------*/
     private fun googleSignIn() {
         val googleOptions = GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -151,7 +151,6 @@ class LoginActivity : AppCompatActivity() {
 
 
     /*-------------------------- Bottom Menu ---------------------------*/
-
     fun setBottomMenu() {
         signup_bottom_menu1.setTextColor(Color.parseColor("#000000"))
         login_bottom_menu1.setTextColor(Color.parseColor("#0835C5"))
@@ -167,7 +166,6 @@ class LoginActivity : AppCompatActivity() {
 
 
     /*-------------------------- Ready Database ---------------------------*/
-
     private fun readyDatabase() {
         ready_database.setOnClickListener {
             addUsers()
