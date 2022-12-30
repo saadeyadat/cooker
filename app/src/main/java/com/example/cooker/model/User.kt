@@ -18,5 +18,8 @@ data class User (
     @ColumnInfo(name = "lists")
     var lists: String? = "",
     @ColumnInfo(name = "image")
-    var image: String? = ""
+    var image: String? = "",
+    @ColumnInfo(name = "timesTamp")
+    var timesTamp: Long = System.currentTimeMillis()
+
 )

@@ -98,13 +98,13 @@ class ItemsActivity : AppCompatActivity() {
         val userEmail = list.owner.split("-")[0]
         val userName = list.owner.split("-")[1]
         val name = edit_text.text.toString()
-        val item = Item(userEmail, userName, list.name, name, String(), String())
+        val item = Item(list.name, name, String(), String())
         if (currentUserEmail == list.owner.split("-")[0]) {
             itemsViewModel.viewModelScope.launch(Dispatchers.IO) {
                 itemsViewModel.addItem(item)
             }
             FirebaseManager.getInstance(this)
-                .addItem(Item(userEmail, userName, list.name, name, String(), String()))
+                .addItem(Item(list.name, name, String(), String()))
             edit_text.setText("")
             NotificationsManager.newItem(this, list.name.split("-")[1])
         }

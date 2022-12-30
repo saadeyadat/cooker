@@ -28,8 +28,11 @@ class UsersAdapter(private val users: MutableList<User>) : RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.users_table_name.text = users[position].name
-        viewHolder.users_table_email.text = users[position].email
+        if (users[position].name.contains(' '))
+            viewHolder.users_table_name.text = users[position].name.split(' ')[1]
+        else
+            viewHolder.users_table_name.text = users[position].name
+        viewHolder.users_table_email.text = users[position].email.split('@')[0] + "(" + users[position].email.split('@')[1].split('.')[0] + ")"
         viewHolder.users_table_level.text = users[position].type
     }
 

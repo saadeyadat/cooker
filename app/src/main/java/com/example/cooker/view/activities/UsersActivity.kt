@@ -11,19 +11,24 @@ import kotlinx.android.synthetic.main.users_activity.*
 
 class UsersActivity() : AppCompatActivity() {
 
-    private var maxPageCount = 8
+    private var maxPageCount = 6
     private val users = mutableListOf<User>()
     private val usersViewModel: UsersViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.users_activity)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        load_more.setOnClickListener { pagination() }
+        showUsers()
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    private fun showUsers() {
+        pagination()
+        load_more.setOnClickListener { pagination() }
     }
 
     private fun pagination() {

@@ -11,12 +11,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cooker.R
+import com.example.cooker.model.Item
 import com.example.cooker.model.User
 import com.example.cooker.model.database.Repository
 import com.example.cooker.other.managers.FirebaseManager
 import com.example.cooker.other.managers.SharedPrefManager
 import com.example.cooker.other.register.AppSignIn
 import com.example.cooker.view.fragments.SignupFragment
+import com.example.cooker.viewModel.ItemsViewModel
+import com.example.cooker.viewModel.ListsViewModel
 import com.example.cooker.viewModel.UsersViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -28,17 +31,22 @@ import kotlinx.android.synthetic.main.login_activity.login_bottom_menu1
 import kotlinx.android.synthetic.main.login_activity.signup_bottom_menu1
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlin.concurrent.thread
 
 class LoginActivity : AppCompatActivity() {
 
     private val firebase = FirebaseAuth.getInstance()
     private lateinit var sharedPreferences: SharedPreferences
-    private val usersViewModel: UsersViewModel by viewModels()
     private lateinit var googleContent:  ActivityResultLauncher<Intent>
+
+    private val usersViewModel: UsersViewModel by viewModels()
+    private val listsViewModel: ListsViewModel by viewModels()
+    private val itemsViewModel: ItemsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
+        readyDatabase()
         setBottomMenu()
         setGoogleContent()
         setSharedPref()
@@ -109,12 +117,11 @@ class LoginActivity : AppCompatActivity() {
     private fun checkUser(googleSignInAccount: GoogleSignInAccount) {
         firebase.fetchSignInMethodsForEmail(googleSignInAccount.email!!)
             .addOnSuccessListener {
-                if (it.signInMethods.isNullOrEmpty()) { // if user is not exist in the firebase, register it in all the databases.
-                    regToSharedPref(googleSignInAccount)
+                if (it.signInMethods.isNullOrEmpty()) {
                     regToDatabase(googleSignInAccount)
                     regToFirebase(googleSignInAccount)
                 }
-                else // if user exist in firebase you can open the app.
+                else
                     openApp(googleSignInAccount.email.toString())
             }
             .addOnFailureListener { displayToast("Failed on Firebase") }
@@ -129,11 +136,6 @@ class LoginActivity : AppCompatActivity() {
                 openApp(googleSignInAccount.email.toString())
             }
             .addOnFailureListener { displayToast("try later") }
-    }
-
-    private fun regToSharedPref(googleSignInAccount: GoogleSignInAccount) {
-        val user = User(googleSignInAccount.email.toString(), "Google Password", googleSignInAccount.givenName.toString(), "beginner")
-        SharedPrefManager.getInstance(this).setUser(user)
     }
 
     private fun regToDatabase(googleSignInAccount: GoogleSignInAccount) {
@@ -163,4 +165,250 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+
+    /*-------------------------- Ready Database ---------------------------*/
+
+    private fun readyDatabase() {
+        ready_database.setOnClickListener {
+            addUsers()
+            addLists()
+            addItems()
+            openApp("cristiano.ronaldo@gmail.com")
+        }
+    }
+
+    private fun addUsers() {
+        usersViewModel.usersData.observe(this) {
+            if (it.isEmpty())
+                thread(start = true) {
+                    Repository.getInstance(this).addUser(
+                        User(
+                            "cristiano.ronaldo@gmail.com",
+                            "00000000",
+                            "Cristiano Ronaldo",
+                            "Master"
+                        )
+                    )
+                    Repository.getInstance(this)
+                        .addUser(
+                            User(
+                                "leo.messi@hotmail.com",
+                                "00000000",
+                                "Leonel Messi",
+                                "beginner"
+                            )
+                        )
+                    Repository.getInstance(this)
+                        .addUser(
+                            User(
+                                "muhamad.salah@email.com",
+                                "00000000",
+                                "Muhamad Salah",
+                                "Master"
+                            )
+                        )
+                    Repository.getInstance(this)
+                        .addUser(
+                            User(
+                                "karim.benzema@outlook.com",
+                                "00000000",
+                                "Karim Benzema",
+                                "Master"
+                            )
+                        )
+                    Repository.getInstance(this).addUser(
+                        User(
+                            "zlatan.ibra@gmail.com",
+                            "00000000",
+                            "zlatan ibrahimovich",
+                            "beginner"
+                        )
+                    )
+                    Repository.getInstance(this).addUser(
+                        User(
+                            "zenidine.zidane@outlook.com",
+                            "00000000",
+                            "zenidine zidane",
+                            "Master"
+                        )
+                    )
+                    Repository.getInstance(this)
+                        .addUser(
+                            User(
+                                "ronaldinho@hotmail.com",
+                                "00000000",
+                                "ronaldinho",
+                                "beginner"
+                            )
+                        )
+                    Repository.getInstance(this)
+                        .addUser(
+                            User(
+                                "ronaldo.brazil@hackeru.com",
+                                "00000000",
+                                "Ronaldo",
+                                "beginner"
+                            )
+                        )
+                    Repository.getInstance(this)
+                        .addUser(User("rici.kaka@gmail.com", "00000000", "rici kaka", "beginner"))
+                    Repository.getInstance(this)
+                        .addUser(User("toni.krooz@walla.com", "00000000", "toni.krooz", "beginner"))
+                    Repository.getInstance(this)
+                        .addUser(
+                            User(
+                                "luka.modric@yahoo.com",
+                                "00000000",
+                                "Cristiano Ronaldo",
+                                "beginner"
+                            )
+                        )
+                    Repository.getInstance(this)
+                        .addUser(
+                            User(
+                                "andreas.inesta@gmail.com",
+                                "00000000",
+                                "andreas inesta",
+                                "beginner"
+                            )
+                        )
+                    Repository.getInstance(this)
+                        .addUser(
+                            User(
+                                "frank.rebiry@outlook.com",
+                                "00000000",
+                                "frank rebiry",
+                                "Master"
+                            )
+                        )
+                    Repository.getInstance(this).addUser(
+                        User(
+                            "muhamad.abotrika@hotmail.com",
+                            "00000000",
+                            "muhamad abotrika",
+                            "Master"
+                        )
+                    )
+                    Repository.getInstance(this)
+                        .addUser(
+                            User(
+                                "kilyan.mbape@hackeru.com",
+                                "00000000",
+                                "kilyan mbape",
+                                "beginner"
+                            )
+                        )
+                    Repository.getInstance(this)
+                        .addUser(User("halaand@gmail.com", "00000000", "halaand", "beginner"))
+                    Repository.getInstance(this)
+                        .addUser(
+                            User(
+                                "angel.dimaria@outlook.com",
+                                "00000000",
+                                "angel dimaria",
+                                "beginner"
+                            )
+                        )
+                    Repository.getInstance(this)
+                        .addUser(User("hakim.zyech@yahoo.com", "00000000", "hakim zyech", "Master"))
+                    Repository.getInstance(this)
+                        .addUser(
+                            User(
+                                "ashrf.hakimi@hackeru.com",
+                                "00000000",
+                                "ashrf hakimi",
+                                "Master"
+                            )
+                        )
+                    Repository.getInstance(this)
+                        .addUser(User("yasin.bono@walla.com", "00000000", "yasin bono", "Master"))
+
+                }
+        }
+    }
+
+    private fun addLists() {
+        listsViewModel.listsData.observe(this) {
+            if (it.isEmpty())
+                thread(start = true) {
+                    Repository.getInstance(this).addList(
+                        com.example.cooker.model.List(
+                            "cristiano.ronaldo@gmail.com-Pasta",
+                            "cristiano.ronaldo@gmail.com-Cristiano Ronaldo",
+                            "Salad,FastFood,Home,",
+                            participants = "leo.messi@hotmail.com-yasin.bono@walla.com-muhamad.salah@email.com-angel.dimaria@outlook.com-luka.modric@yahoo.com-andreas.inesta@gmail.com"
+                        )
+                    )
+                    Repository.getInstance(this).addList(
+                        com.example.cooker.model.List(
+                            "leo.messi@hotmail.com-Spicy Chicken",
+                            "leo.messi@hotmail.com-Lionel Messi",
+                            "BBQ,Events,",
+                            participants = "cristiano.ronaldo@gmail.com-leo.messi@hotmail.com-yasin.bono@walla.com-muhamad.salah@email.com-angel.dimaria@outlook.com"
+                        )
+                    )
+                    Repository.getInstance(this).addList(
+                        com.example.cooker.model.List(
+                            "yasin.bono@walla.com-Kofta",
+                            "yasin.bono@walla.com-yasin bono",
+                            "BBQ,Home,",
+                            participants = "cristiano.ronaldo@gmail.com-muhamad.salah@email.com-angel.dimaria@outlook.com"
+                        )
+                    )
+                    Repository.getInstance(this).addList(
+                        com.example.cooker.model.List(
+                            "muhamad.salah@email.com-Falafel",
+                            "muhamad.salah@email.com-muhamad salah",
+                            "FastFood,Home,Events,",
+                            participants = "cristiano.ronaldo@gmail.com-yasin.bono@walla.com"
+                        )
+                    )
+                    Repository.getInstance(this).addList(
+                        com.example.cooker.model.List(
+                            "cristiano.ronaldo@gmail.com-Milk Shake",
+                            "cristiano.ronaldo@gmail.com-Cristiano Ronaldo",
+                            "Shakes,FastFood,Events,",
+                            participants = "leo.messi@hotmail.com-yasin.bono@walla.com"
+                        )
+                    )
+                    Repository.getInstance(this).addList(
+                        com.example.cooker.model.List(
+                            "angel.dimaria@outlook.com-Pizza",
+                            "angel.dimaria@outlook.com-angel dimaria",
+                            "FastFood,Home,Events,",
+                            participants = "cristiano.ronaldo@gmail.com-leo.messi@hotmail.com-yasin.bono@walla.com"
+                        )
+                    )
+                }
+        }
+    }
+
+    private fun addItems() {
+        itemsViewModel.itemsData.observe(this) {
+            if (it.isEmpty())
+                thread(start = true) {
+                    Repository.getInstance(this).addItem(Item("cristiano.ronaldo@gmail.com-Pasta", "Eggs", info = "2 eggs,mix together"))
+                    Repository.getInstance(this).addItem(Item("cristiano.ronaldo@gmail.com-Pasta", "Olive Oil", info = "2 big spoons,"))
+                    Repository.getInstance(this).addItem(Item("cristiano.ronaldo@gmail.com-Pasta", "Salt", info = "3 grams,regular salt,"))
+
+                    Repository.getInstance(this).addItem(Item("leo.messi@hotmail.com-Spicy Chicken", "Garlic Powder", info = "1 spoon,"))
+                    Repository.getInstance(this).addItem(Item("leo.messi@hotmail.com-Spicy Chicken", "Paprika", info = "2 spoons,"))
+
+                    Repository.getInstance(this).addItem(Item("yasin.bono@walla.com-Kofta", "Olive Oil", info = "5 grams,"))
+                    Repository.getInstance(this).addItem(Item("yasin.bono@walla.com-Kofta", "Parsley", info = "brushed,200 grams,"))
+                    Repository.getInstance(this).addItem(Item("yasin.bono@walla.com-Kofta", "Onion", info = "brushed,1 medium piece,"))
+
+                    Repository.getInstance(this).addItem(Item("muhamad.salah@email.com-Falafel", "Hommos", info = "1 can,mix it,"))
+                    Repository.getInstance(this).addItem(Item("muhamad.salah@email.com-Falafel", "Tohina", info = "1/2 can,mix with hommos,"))
+
+                    Repository.getInstance(this).addItem(Item("cristiano.ronaldo@gmail.com-Milk Shake", "Mild", info = "250 ml,"))
+                    Repository.getInstance(this).addItem(Item("cristiano.ronaldo@gmail.com-Milk Shake", "Choco", info = "100 gram,"))
+
+                    Repository.getInstance(this).addItem(Item("angel.dimaria@outlook.com-Pizza", "Cheese", info = "500 gram,fixed brushed,"))
+                    Repository.getInstance(this).addItem(Item("angel.dimaria@outlook.com-Pizza", "Dough", info = "large size,"))
+                    Repository.getInstance(this).addItem(Item("angel.dimaria@outlook.com-Pizza", "Oil", info = "small pieces,"))
+
+                }
+        }
+    }
 }
