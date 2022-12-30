@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cooker.R
 import com.example.cooker.model.User
 
-class UsersAdapter(private val users: List<User>) : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
+class UsersAdapter(private val users: MutableList<User>) : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val users_table_name: TextView

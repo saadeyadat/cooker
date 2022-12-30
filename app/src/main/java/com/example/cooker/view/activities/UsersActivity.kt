@@ -11,12 +11,14 @@ import kotlinx.android.synthetic.main.users_activity.*
 
 class UsersActivity() : AppCompatActivity() {
 
+    private var maxPageCount = 8
+    private val users = mutableListOf<User>()
     private val usersViewModel: UsersViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.users_activity)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        usersRecyclerView()
+        load_more.setOnClickListener { pagination() }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -24,10 +26,24 @@ class UsersActivity() : AppCompatActivity() {
         return true
     }
 
-    private fun usersRecyclerView() {
+    private fun pagination() {
         usersViewModel.usersData.observe(this) {
-            val adapter = UsersAdapter(it)
-            users_recyclerview.adapter = adapter
+            var usersInPage = 1
+            for (user in it) {
+                if (!users.contains(user))
+                    users.add(user)
+                if (usersInPage % maxPageCount == 0 || usersInPage >= it.size) {
+                    usersRecyclerView(users)
+                    maxPageCount += maxPageCount
+                    break
+                }
+                usersInPage++
+            }
         }
+    }
+
+    private fun usersRecyclerView(users: MutableList<User>) {
+        val adapter = UsersAdapter(users)
+        users_recyclerview.adapter = adapter
     }
 }
