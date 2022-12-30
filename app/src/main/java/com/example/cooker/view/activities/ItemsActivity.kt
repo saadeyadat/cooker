@@ -94,9 +94,9 @@ class ItemsActivity : AppCompatActivity() {
         user_image.setOnClickListener { addUserImage(list) }
     }
 
+
+    /* ---------------- Edit Items ---------------- */
     private fun addItem(list: List) {
-        val userEmail = list.owner.split("-")[0]
-        val userName = list.owner.split("-")[1]
         val name = edit_text.text.toString()
         val item = Item(list.name, name, String(), String())
         if (currentUserEmail == list.owner.split("-")[0]) {
@@ -163,7 +163,6 @@ class ItemsActivity : AppCompatActivity() {
 
 
     /* ---------------- RecyclerViews ---------------- */
-
     private fun participantsRecyclerView(participants: String) {
         usersViewModel.usersData.observe(this) {
             if (participants.isNotEmpty()) {
@@ -197,8 +196,8 @@ class ItemsActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.info_fragment, itemFragment).commit()
     }
 
-    /* ---------------- Gallery Images Update ---------------- */
 
+    /* ---------------- Gallery Images Update ---------------- */
     private var currentItem: Item? = null
     private val itemContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val uri = result.data?.data
@@ -224,7 +223,6 @@ class ItemsActivity : AppCompatActivity() {
 
 
     /* ---------------- Camera Images Update ---------------- */
-
     private fun cameraAlert(context: Context) {
         usersViewModel.viewModelScope.launch(Dispatchers.Main) {
             val alertBuilder = AlertDialog.Builder(context)
@@ -261,7 +259,6 @@ class ItemsActivity : AppCompatActivity() {
 
 
     /* ---------------- Alerts ---------------- */
-
     private fun itemImageAlert(context: Context) {
         itemsViewModel.viewModelScope.launch(Dispatchers.Main) {
             val alertBuilder = AlertDialog.Builder(context)

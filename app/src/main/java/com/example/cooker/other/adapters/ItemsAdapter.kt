@@ -24,10 +24,10 @@ import kotlinx.coroutines.launch
 class ItemsAdapter(private val list: List,
                    private val currentUserEmail: String,
                    private val context: Context,
-                   val updateImage: (Item) -> Unit, // unit is like void
+                   val updateImage: (Item) -> Unit,
                    val displayFruitFragment: (Item) -> Unit): RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
 
-    private var i = 0 // help to scan all dataList and print items to the correct list
+    private var i = 0
     private var dataList = emptyList<Item>()
     fun setList(itemList: kotlin.collections.List<Item>) {
         this.dataList = itemList

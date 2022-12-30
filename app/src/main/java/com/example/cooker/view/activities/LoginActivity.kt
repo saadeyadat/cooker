@@ -15,7 +15,6 @@ import com.example.cooker.model.Item
 import com.example.cooker.model.User
 import com.example.cooker.model.database.Repository
 import com.example.cooker.other.managers.FirebaseManager
-import com.example.cooker.other.managers.SharedPrefManager
 import com.example.cooker.other.register.AppSignIn
 import com.example.cooker.view.fragments.SignupFragment
 import com.example.cooker.viewModel.ItemsViewModel

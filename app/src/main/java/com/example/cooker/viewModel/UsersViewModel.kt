@@ -10,8 +10,4 @@ class UsersViewModel(val app: Application): AndroidViewModel(app) {
 
     private val repository = Repository.getInstance(app.applicationContext)
     val usersData: LiveData<List<User>> = repository.getAllUsers()
-
-    fun addUser(user: User) {
-        repository.addUser(user)
-    }
 }

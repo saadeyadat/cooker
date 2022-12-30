@@ -72,6 +72,107 @@ class ListsActivity : AppCompatActivity() {
         }
     }
 
+    private fun addNewList(user: User) {
+        val newListFragment = NewListFragment(user, this)
+        add_list.setOnClickListener {
+            supportFragmentManager.beginTransaction().replace(R.id.new_list_fragment, newListFragment).commit()
+        }
+    }
+
+    private fun addUserImage() {
+        if (allowResult) {
+            if (allowCamera)
+                cameraAlert(this)
+            else
+                userImageAlert(this)
+        }
+        else
+            Toast.makeText(this, "Only Recipe Owner Allow To Edit This Field.", Toast.LENGTH_SHORT).show()
+    }
+
+
+    //-------------------- lists RecyclerView --------------------//
+    private fun listsRecyclerView(user: User, filterListsStr: String) {
+        listsRecyclerView?.adapter = adapter
+        if (filterListsStr == "")
+            listsViewModel.listsData.observe(this) { adapter.setList(setUserLists(it, user), user, this) }
+        else
+            showFilteredLists(user, filterListsStr)
+    }
+
+    private fun setUserLists(allLists: kotlin.collections.List<List>, user: User): MutableList<List> {
+        var userLists = mutableListOf<List>()
+        for (list in allLists) {
+            var flag = 0
+            for (userList in userLists)
+                if (userList.name == list.name)
+                    flag++
+            if (list.owner.split("-")[0] == user.email && flag == 0)
+                userLists.add(list)
+            else if (list.participants!!.isNotEmpty())
+                    if (list.participants!!.contains(user.email) && flag == 0)
+                        userLists.add(list)
+        }
+        return userLists
+    }
+
+
+    //-------------------- Search Bar --------------------//
+    private fun searchBar(user: User) {
+        search.clearFocus()
+        search.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterSearchLists(newText, user)
+                return true
+            }
+
+        })
+    }
+
+    private fun filterSearchLists(newText: String?, user: User) {
+        val filteredLists = mutableListOf<List>()
+        var userLists = mutableListOf<List>()
+        listsViewModel.listsData.observe(this) { userLists = setUserLists(it, user) }
+        for (list in userLists)
+            if (list.name.split('-')[1].toLowerCase().contains(newText!!))
+                filteredLists.add(list)
+        if (filteredLists.isEmpty())
+            Toast.makeText(this, "No Lists Found", Toast.LENGTH_SHORT).show()
+        adapter.setList(filteredLists, user, this)
+
+    }
+
+
+    //-------------------- Filter Bar --------------------//
+    private fun filterBar(user: User) {
+        var userLists = mutableListOf<List>()
+        listsViewModel.listsData.observe(this) {
+            userLists = setUserLists(it, user)
+        }
+        filter.setOnClickListener {
+            val filterFragment = FilterFragment(user, userLists)
+            supportFragmentManager.beginTransaction().replace(R.id.filter_fragment, filterFragment).commit()
+        }
+    }
+
+    private fun showFilteredLists(user: User, filterListsStr: String) {
+        val filterListsArr = filterListsStr.split(',')
+        val filteredLists = mutableListOf<List>()
+        var userLists = mutableListOf<List>()
+        listsViewModel.listsData.observe(this) {
+            userLists = setUserLists(it, user)
+            for (list in userLists)
+                if (filterListsArr.contains(list.name.split('-')[1]))
+                    filteredLists.add(list)
+            adapter.setList(filteredLists, user, this)
+        }
+    }
+
+
+    //-------------------- menu methods --------------------//
     private fun setMenuBar(user: User) {
         val drawer: DrawerLayout = findViewById(R.id.lists_drawer_layout)
         val menu: NavigationView = findViewById(R.id.menu)
@@ -106,123 +207,6 @@ class ListsActivity : AppCompatActivity() {
         }
     }
 
-    private fun addNewList(user: User) {
-        val newListFragment = NewListFragment(user, this)
-        add_list.setOnClickListener {
-            supportFragmentManager.beginTransaction().replace(R.id.new_list_fragment, newListFragment).commit()
-        }
-    }
-
-    private fun cameraPermission(user: User) {
-        currentUser = user
-        if (ActivityCompat.checkSelfPermission(currentActivity, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)  {
-            ActivityCompat.requestPermissions(currentActivity, arrayOf(android.Manifest.permission.CAMERA), 111)
-            allowResult = true
-        }
-        else {
-            allowCamera = true
-            allowResult = true
-        }
-    }
-
-    private fun addUserImage() {
-        if (allowResult) {
-            if (allowCamera)
-                cameraAlert(this)
-            else
-                userImageAlert(this)
-        }
-        else
-            Toast.makeText(this, "Only Recipe Owner Allow To Edit This Field.", Toast.LENGTH_SHORT).show()
-    }
-
-
-    //-------------------- lists RecyclerView --------------------//
-
-    private fun listsRecyclerView(user: User, filterListsStr: String) {
-        listsRecyclerView?.adapter = adapter
-        if (filterListsStr == "")
-            listsViewModel.listsData.observe(this) { adapter.setList(setUserLists(it, user), user, this) }
-        else
-            showFilteredLists(user, filterListsStr)
-    }
-
-    private fun setUserLists(allLists: kotlin.collections.List<List>, user: User): MutableList<List> {
-        var userLists = mutableListOf<List>()
-        for (list in allLists) {
-            var flag = 0
-            for (userList in userLists)
-                if (userList.name == list.name)
-                    flag++
-            if (list.owner.split("-")[0] == user.email && flag == 0)
-                userLists.add(list)
-            else if (list.participants!!.isNotEmpty())
-                    if (list.participants!!.contains(user.email) && flag == 0)
-                        userLists.add(list)
-        }
-        return userLists
-    }
-
-
-    //-------------------- Search Bar --------------------//
-
-    private fun searchBar(user: User) {
-        search.clearFocus()
-        search.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-            override fun onQueryTextChange(newText: String?): Boolean {
-                filterSearchLists(newText, user)
-                return true
-            }
-
-        })
-    }
-
-    private fun filterSearchLists(newText: String?, user: User) {
-        val filteredLists = mutableListOf<List>()
-        var userLists = mutableListOf<List>()
-        listsViewModel.listsData.observe(this) { userLists = setUserLists(it, user) }
-        for (list in userLists)
-            if (list.name.split('-')[1].toLowerCase().contains(newText!!))
-                filteredLists.add(list)
-        if (filteredLists.isEmpty())
-            Toast.makeText(this, "No Lists Found", Toast.LENGTH_SHORT).show()
-        adapter.setList(filteredLists, user, this)
-
-    }
-
-
-    //-------------------- Search Bar --------------------//
-
-    private fun filterBar(user: User) {
-        var userLists = mutableListOf<List>()
-        listsViewModel.listsData.observe(this) {
-            userLists = setUserLists(it, user)
-        }
-        filter.setOnClickListener {
-            val filterFragment = FilterFragment(user, userLists)
-            supportFragmentManager.beginTransaction().replace(R.id.filter_fragment, filterFragment).commit()
-        }
-    }
-
-    private fun showFilteredLists(user: User, filterListsStr: String) {
-        val filterListsArr = filterListsStr.split(',')
-        val filteredLists = mutableListOf<List>()
-        var userLists = mutableListOf<List>()
-        listsViewModel.listsData.observe(this) {
-            userLists = setUserLists(it, user)
-            for (list in userLists)
-                if (filterListsArr.contains(list.name.split('-')[1]))
-                    filteredLists.add(list)
-            adapter.setList(filteredLists, user, this)
-        }
-    }
-
-
-    //-------------------- menu methods --------------------//
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
             return true
@@ -247,7 +231,6 @@ class ListsActivity : AppCompatActivity() {
 
 
     /* ---------------- Camera Images Update ---------------- */
-
     private var allowCamera = false
     private var allowResult = false
     private var currentActivity = this
@@ -256,6 +239,18 @@ class ListsActivity : AppCompatActivity() {
         val uri = result.data?.data
         menu_user_image.setImageURI(uri)
         ImagesManager.userImageFromGallery(uri!!, this, currentUser!!)
+    }
+
+    private fun cameraPermission(user: User) {
+        currentUser = user
+        if (ActivityCompat.checkSelfPermission(currentActivity, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)  {
+            ActivityCompat.requestPermissions(currentActivity, arrayOf(android.Manifest.permission.CAMERA), 111)
+            allowResult = true
+        }
+        else {
+            allowCamera = true
+            allowResult = true
+        }
     }
 
     private fun cameraAlert(context: Context) {
