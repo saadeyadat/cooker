@@ -347,7 +347,7 @@ class LoginActivity : AppCompatActivity() {
                             "cristiano.ronaldo@gmail.com-Pasta",
                             "cristiano.ronaldo@gmail.com-Cristiano Ronaldo",
                             "Salad,FastFood,Home,",
-                            participants = "leo.messi@hotmail.com-yasin.bono@walla.com-muhamad.salah@email.com-angel.dimaria@outlook.com-luka.modric@yahoo.com-andreas.inesta@gmail.com"
+                            participants = "leo.messi@hotmail.com-ashrf.hakimi@hackeru.com-yasin.bono@walla.com-muhamad.salah@email.com-angel.dimaria@outlook.com-luka.modric@yahoo.com-andreas.inesta@gmail.com"
                         )
                     )
                     Repository.getInstance(this).addList(
@@ -398,26 +398,26 @@ class LoginActivity : AppCompatActivity() {
         itemsViewModel.itemsData.observe(this) {
             if (it.isEmpty())
                 thread(start = true) {
-                    Repository.getInstance(this).addItem(Item("cristiano.ronaldo@gmail.com-Pasta", "Eggs", info = "2 eggs,mix together"))
-                    Repository.getInstance(this).addItem(Item("cristiano.ronaldo@gmail.com-Pasta", "Olive Oil", info = "2 big spoons,"))
-                    Repository.getInstance(this).addItem(Item("cristiano.ronaldo@gmail.com-Pasta", "Salt", info = "3 grams,regular salt,"))
+                    Repository.getInstance(this).addItem(Item("cristiano.ronaldo@gmail.com-Pasta", "Eggs", "https://www.licious.in/blog/wp-content/uploads/2022/01/eggs-1-750x750.jpg", "2 eggs,mix together"))
+                    Repository.getInstance(this).addItem(Item("cristiano.ronaldo@gmail.com-Pasta", "Olive Oil", "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/08/18/olive-oli-in-glass-cruet-glass-bowl-olives-wood-surface.jpg.rend.hgtvcom.616.462.suffix/1629320083324.jpeg","2 big spoons,"))
+                    Repository.getInstance(this).addItem(Item("cristiano.ronaldo@gmail.com-Pasta", "Salt", "https://koyuncusalt.com/images/blog/b-855e18a7d0.jpg","3 grams,regular salt,"))
 
-                    Repository.getInstance(this).addItem(Item("leo.messi@hotmail.com-Spicy Chicken", "Garlic Powder", info = "1 spoon,"))
-                    Repository.getInstance(this).addItem(Item("leo.messi@hotmail.com-Spicy Chicken", "Paprika", info = "2 spoons,"))
+                    Repository.getInstance(this).addItem(Item("leo.messi@hotmail.com-Spicy Chicken", "Garlic Powder", "https://images.ctfassets.net/3s5io6mnxfqz/7aAOWhtanh9vuRaXzLaOnZ/fe33da450f1e7b83c86d5da42909d815/AdobeStock_322407079.jpeg", "1 spoon,"))
+                    Repository.getInstance(this).addItem(Item("leo.messi@hotmail.com-Spicy Chicken", "Paprika", "https://www.healthifyme.com/blog/wp-content/uploads/2022/06/shutterstock_385876042-1-750x375.jpg", "2 spoons,"))
 
-                    Repository.getInstance(this).addItem(Item("yasin.bono@walla.com-Kofta", "Olive Oil", info = "5 grams,"))
-                    Repository.getInstance(this).addItem(Item("yasin.bono@walla.com-Kofta", "Parsley", info = "brushed,200 grams,"))
-                    Repository.getInstance(this).addItem(Item("yasin.bono@walla.com-Kofta", "Onion", info = "brushed,1 medium piece,"))
+                    Repository.getInstance(this).addItem(Item("yasin.bono@walla.com-Kofta", "Olive Oil", "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/08/18/olive-oli-in-glass-cruet-glass-bowl-olives-wood-surface.jpg.rend.hgtvcom.616.462.suffix/1629320083324.jpeg", "5 grams,"))
+                    Repository.getInstance(this).addItem(Item("yasin.bono@walla.com-Kofta", "Parsley", "https://cdn-prod.medicalnewstoday.com/content/images/articles/284/284490/parsley.jpg","brushed,200 grams,"))
+                    Repository.getInstance(this).addItem(Item("yasin.bono@walla.com-Kofta", "Onion", "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/the-health-benefits-of-onions-main-image-700-350-8425535.jpg", "brushed,1 medium piece,"))
 
-                    Repository.getInstance(this).addItem(Item("muhamad.salah@email.com-Falafel", "Hommos", info = "1 can,mix it,"))
-                    Repository.getInstance(this).addItem(Item("muhamad.salah@email.com-Falafel", "Tohina", info = "1/2 can,mix with hommos,"))
+                    Repository.getInstance(this).addItem(Item("muhamad.salah@email.com-Falafel", "Hommos", "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Lebanese_style_hummus.jpg/1200px-Lebanese_style_hummus.jpg", "1 can,mix it,"))
+                    Repository.getInstance(this).addItem(Item("muhamad.salah@email.com-Falafel", "Tahini", "https://m.media-amazon.com/images/I/81cIusJA22L._SL1500_.jpg", "1/2 can,mix with hommos,"))
 
-                    Repository.getInstance(this).addItem(Item("cristiano.ronaldo@gmail.com-Milk Shake", "Mild", info = "250 ml,"))
-                    Repository.getInstance(this).addItem(Item("cristiano.ronaldo@gmail.com-Milk Shake", "Choco", info = "100 gram,"))
+                    Repository.getInstance(this).addItem(Item("cristiano.ronaldo@gmail.com-Milk Shake", "Milk", "https://s3-us-west-2.amazonaws.com/melingoimages/Images/60691.jpg", "250 ml,"))
+                    Repository.getInstance(this).addItem(Item("cristiano.ronaldo@gmail.com-Milk Shake", "Chocolate", "https://chocolatecoveredkatie.com/wp-content/uploads/2020/08/Homemade-Chocolate-Bars-500x500.jpg", "100 gram,"))
 
-                    Repository.getInstance(this).addItem(Item("angel.dimaria@outlook.com-Pizza", "Cheese", info = "500 gram,fixed brushed,"))
-                    Repository.getInstance(this).addItem(Item("angel.dimaria@outlook.com-Pizza", "Dough", info = "large size,"))
-                    Repository.getInstance(this).addItem(Item("angel.dimaria@outlook.com-Pizza", "Oil", info = "small pieces,"))
+                    Repository.getInstance(this).addItem(Item("angel.dimaria@outlook.com-Pizza", "Cheese", "https://images-prod.healthline.com/hlcmsresource/images/AN_images/healthiest-cheese-1296x728-swiss.jpg", "500 gram,fixed brushed,"))
+                    Repository.getInstance(this).addItem(Item("angel.dimaria@outlook.com-Pizza", "Dough", "https://preppykitchen.com/wp-content/uploads/2021/07/pizza-dough-recipe-n.jpg", "large size,"))
+                    Repository.getInstance(this).addItem(Item("angel.dimaria@outlook.com-Pizza", "Olive Oil", "https://food.fnr.sndimg.com/content/dam/images/food/fullset/2021/08/18/olive-oli-in-glass-cruet-glass-bowl-olives-wood-surface.jpg.rend.hgtvcom.616.462.suffix/1629320083324.jpeg", "small pieces,"))
 
                 }
         }

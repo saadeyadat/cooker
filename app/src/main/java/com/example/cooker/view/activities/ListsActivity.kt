@@ -88,7 +88,7 @@ class ListsActivity : AppCompatActivity() {
                 userImageAlert(this)
         }
         else
-            Toast.makeText(this, "Only Recipe Owner Allow To Edit This Field.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Only Owner Allow To Edit This Field.", Toast.LENGTH_SHORT).show()
     }
 
 
