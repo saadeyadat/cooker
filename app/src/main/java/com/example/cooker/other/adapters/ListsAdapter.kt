@@ -3,6 +3,7 @@ package com.example.cooker.other.adapters
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,7 +58,7 @@ class ListsAdapter(): RecyclerView.Adapter<ListsAdapter.ViewHolder>() {
             val intent = Intent(context, ItemsActivity::class.java)
             intent.putExtra("listID", lists[position].name)
             intent.putExtra("userEmail", user.email)
-            context.startActivity(intent)
+            Handler().postDelayed({context.startActivity(intent)},1000)
         }
 
         holder.delete.setOnClickListener {

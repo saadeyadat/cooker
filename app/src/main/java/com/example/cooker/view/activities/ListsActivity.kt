@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.provider.MediaStore
 import android.view.MenuItem
 import android.view.View
@@ -66,9 +67,9 @@ class ListsActivity : AppCompatActivity() {
                     listsRecyclerView(user, filterListsStr)
                     cameraPermission(user)
                     addNewList(user)
-                    setMenuBar(user)
                     searchBar(user)
                     filterBar(user)
+                    Handler().postDelayed({setMenuBar(user)}, 1000)
                 }
         }
     }
