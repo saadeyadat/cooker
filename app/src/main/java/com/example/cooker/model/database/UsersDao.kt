@@ -16,6 +16,9 @@ interface UsersDao {
     @Update
     fun updateUser(user: User)
 
+    @Query("DELETE FROM usersTable")
+    fun clearDB()
+
     @Query("Select * from usersTable")
     fun getAllUsers(): LiveData<List<User>>
 }

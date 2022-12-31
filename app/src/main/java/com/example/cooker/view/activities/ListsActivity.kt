@@ -69,7 +69,7 @@ class ListsActivity : AppCompatActivity() {
                     addNewList(user)
                     searchBar(user)
                     filterBar(user)
-                    Handler().postDelayed({setMenuBar(user)}, 1000)
+                    Handler().postDelayed({setMenuBar(user)}, 500)
                 }
         }
     }

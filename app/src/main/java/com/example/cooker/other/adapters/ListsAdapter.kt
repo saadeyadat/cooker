@@ -58,7 +58,7 @@ class ListsAdapter(): RecyclerView.Adapter<ListsAdapter.ViewHolder>() {
             val intent = Intent(context, ItemsActivity::class.java)
             intent.putExtra("listID", lists[position].name)
             intent.putExtra("userEmail", user.email)
-            Handler().postDelayed({context.startActivity(intent)},1000)
+            Handler().postDelayed({context.startActivity(intent)},500)
         }
 
         holder.delete.setOnClickListener {

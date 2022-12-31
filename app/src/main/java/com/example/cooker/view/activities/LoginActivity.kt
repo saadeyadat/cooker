@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -92,7 +93,7 @@ class LoginActivity : AppCompatActivity() {
         editor.putLong("LAST_LOGIN", System.currentTimeMillis()).apply()
         val intent = Intent(this, ListsActivity::class.java)
         intent.putExtra("userEmail", email)
-        startActivity(intent)
+        Handler().postDelayed({startActivity(intent)},500)
     }
 
 
@@ -114,16 +115,18 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkUser(googleSignInAccount: GoogleSignInAccount) {
+        var isExist = false
         firebase.fetchSignInMethodsForEmail(googleSignInAccount.email!!)
-            .addOnSuccessListener {
-                if (it.signInMethods.isNullOrEmpty()) {
-                    regToDatabase(googleSignInAccount)
-                    regToFirebase(googleSignInAccount)
-                }
-                else
-                    openApp(googleSignInAccount.email.toString())
-            }
-            .addOnFailureListener { displayToast("Failed on Firebase") }
+        usersViewModel.usersData.observe(this) {
+            for (user in it)
+                if (user.email == googleSignInAccount.email.toString())
+                    isExist = true
+        }
+        if (!isExist) {
+            regToDatabase(googleSignInAccount)
+            regToFirebase(googleSignInAccount)
+        }
+        openApp(googleSignInAccount.email.toString())
     }
 
     private fun regToFirebase(googleSignInAccount: GoogleSignInAccount) {
@@ -175,6 +178,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun addUsers() {
+        thread(start = true) { Repository.getInstance(this).clearDB() }
         usersViewModel.usersData.observe(this) {
             if (it.isEmpty())
                 thread(start = true) {

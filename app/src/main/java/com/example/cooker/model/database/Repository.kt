@@ -51,8 +51,8 @@ class Repository private constructor(application: Context?) {
         firebase.addUserImage(uri, currentUser)
     }
 
-    fun getUserImageToFB(currentUser: User) {
-        firebase.getUserImage(currentUser)
+    fun clearDB() {
+        userDao.clearDB()
     }
 
     //------------- Lists Functions -------------//
