@@ -188,9 +188,16 @@ class ItemsActivity : AppCompatActivity() {
     }
 
     private fun itemsRecyclerView(list: List) {
-        val adapter = ItemsAdapter(list, currentUserEmail, this, updateImage()) { displayItemFragment(it) }
-        item_recyclerView.adapter = adapter
-        itemsViewModel.itemsData.observe(this) { adapter.setList(it) }
+        val listItems = mutableListOf<Item>()
+        val adapter = ItemsAdapter(list, currentUserEmail, this, updateItemImage()) { displayItemFragment(it) }
+        itemsViewModel.itemsData.observe(this) {
+            for (item in it)
+                if (item.list == list.name)
+                    if (!listItems.contains(item))
+                        listItems.add(item)
+            item_recyclerView.adapter = adapter
+            itemsViewModel.itemsData.observe(this) { adapter.setList(listItems) }
+        }
     }
 
     private fun displayItemFragment(item: Item) {
@@ -207,7 +214,7 @@ class ItemsActivity : AppCompatActivity() {
         val uri = result.data?.data
         ImagesManager.itemImageFromGallery(uri!!, this, currentItem!!)
     }
-    private fun updateImage(): (item: Item) -> Unit = {
+    private fun updateItemImage(): (item: Item) -> Unit = {
         currentItem = it
         itemImageAlert(this)
     }

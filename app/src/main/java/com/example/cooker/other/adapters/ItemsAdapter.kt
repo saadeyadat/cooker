@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 class ItemsAdapter(private val list: List,
                    private val currentUserEmail: String,
                    private val context: Context,
-                   val updateImage: (Item) -> Unit,
+                   val updateItemImage: (Item) -> Unit,
                    val displayFruitFragment: (Item) -> Unit): RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
 
     private var i = 0
@@ -46,11 +46,7 @@ class ItemsAdapter(private val list: List,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        if (dataList.size == i) i = 0
-        if (dataList[i++].list == list.name)
-            return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.items_adapter, parent, false))
-        else
-            return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.empty_layout, parent, false))
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.items_adapter, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -74,7 +70,7 @@ class ItemsAdapter(private val list: List,
 
         holder.item_image.setOnClickListener {
             if (currentUserEmail == list.owner.split("-")[0])
-                updateImage(dataList[position])
+                updateItemImage(dataList[position])
             else
                 Toast.makeText(context, "Only Owner Allowed To Edit This Field.", Toast.LENGTH_SHORT).show()
         }
