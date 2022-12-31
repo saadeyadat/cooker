@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide
 import com.example.cooker.other.managers.ImagesManager
 import com.example.cooker.R
 import com.example.cooker.model.Item
@@ -83,7 +84,10 @@ class ItemsActivity : AppCompatActivity() {
             for (user in it)
                 if (user.email == list.owner.split("-")[0])
                     if (user.image!!.isNotEmpty())
-                        user_image.setImageURI(Uri.parse(user.image))
+                        if (user.image!!.contains("https://"))
+                            Glide.with(this).load(user.image).into(user_image)
+                        else
+                            user_image.setImageURI(Uri.parse(user.image))
         }
     }
 
@@ -170,7 +174,7 @@ class ItemsActivity : AppCompatActivity() {
                 for (participant in participants.split("-"))
                     if (participant.length > 2)
                         participantsList.add(participant)
-                val adapter = ParticipantsAdapter(participantsList, it) { displayUserDataFragment(it) }
+                val adapter = ParticipantsAdapter(participantsList, it, this) { displayUserDataFragment(it) }
                 participants_recyclerView.adapter = adapter
             }
         }
@@ -178,7 +182,7 @@ class ItemsActivity : AppCompatActivity() {
 
     private fun displayUserDataFragment(user: User) {
         val bundle = bundleOf("userEmail" to user.email, "userImage" to user.image)
-        val userDataFragment = UserDataFragment(user)
+        val userDataFragment = UserDataFragment(user, this)
         userDataFragment.arguments = bundle
         supportFragmentManager.beginTransaction().replace(R.id.user_data_fragment, userDataFragment).commit()
     }

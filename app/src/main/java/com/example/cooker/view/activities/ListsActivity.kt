@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide
 import com.example.cooker.R
 import com.example.cooker.model.List
 import com.example.cooker.model.User
@@ -193,7 +194,10 @@ class ListsActivity : AppCompatActivity() {
         userType.text = user.type
 
         if (user.image!!.isNotEmpty())
-            menu_user_image.setImageURI(Uri.parse(user.image))
+            if (user.image!!.contains("https://"))
+                Glide.with(this).load(user.image).into(menu_user_image)
+            else
+                menu_user_image.setImageURI(Uri.parse(user.image))
 
         userImage.setOnClickListener { addUserImage() }
 

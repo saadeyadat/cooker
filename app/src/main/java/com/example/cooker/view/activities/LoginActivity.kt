@@ -183,7 +183,8 @@ class LoginActivity : AppCompatActivity() {
                             "cristiano.ronaldo@gmail.com",
                             "00000000",
                             "Cristiano Ronaldo",
-                            "Master"
+                            "Master",
+                            image = "https://i2-prod.mirror.co.uk/incoming/article28552428.ece/ALTERNATES/n615/0_Cristiano-Ronaldo-Piers-Morgan.jpg"
                         )
                     )
                     Repository.getInstance(this)
@@ -192,7 +193,8 @@ class LoginActivity : AppCompatActivity() {
                                 "leo.messi@hotmail.com",
                                 "00000000",
                                 "Leonel Messi",
-                                "beginner"
+                                "beginner",
+                                image = "https://img.olympicchannel.com/images/image/private/t_social_share_thumb/f_auto/primary/wfrhxc0kh2vvq77sonki"
                             )
                         )
                     Repository.getInstance(this)
@@ -201,7 +203,8 @@ class LoginActivity : AppCompatActivity() {
                                 "muhamad.salah@email.com",
                                 "00000000",
                                 "Muhamad Salah",
-                                "Master"
+                                "Master",
+                                image = "https://library.sportingnews.com/styles/twitter_card_120x120/s3/2022-01/mohamed-salah-egypt-afcon-2022_w4flk9gdgimi1hizrpndo7v8i.jpg?itok=q_gvNBav"
                             )
                         )
                     Repository.getInstance(this)
@@ -210,7 +213,8 @@ class LoginActivity : AppCompatActivity() {
                                 "karim.benzema@outlook.com",
                                 "00000000",
                                 "Karim Benzema",
-                                "Master"
+                                "Master",
+                                image = "https://pbs.twimg.com/profile_images/1401562839614210052/yo9BeNMD_400x400.jpg"
                             )
                         )
                     Repository.getInstance(this).addUser(
@@ -257,7 +261,8 @@ class LoginActivity : AppCompatActivity() {
                                 "luka.modric@yahoo.com",
                                 "00000000",
                                 "Cristiano Ronaldo",
-                                "beginner"
+                                "beginner",
+                                image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-D9uwVek8hUI0i9_xUhHM5B32p2vx_6zSVw&usqp=CAU"
                             )
                         )
                     Repository.getInstance(this)
@@ -303,7 +308,8 @@ class LoginActivity : AppCompatActivity() {
                                 "angel.dimaria@outlook.com",
                                 "00000000",
                                 "angel dimaria",
-                                "beginner"
+                                "beginner",
+                                image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv6NhXTlacJ1OAZf9XUsOIq0nld35vwzs2AA&usqp=CAU"
                             )
                         )
                     Repository.getInstance(this)
@@ -318,7 +324,15 @@ class LoginActivity : AppCompatActivity() {
                             )
                         )
                     Repository.getInstance(this)
-                        .addUser(User("yasin.bono@walla.com", "00000000", "yasin bono", "Master"))
+                        .addUser(
+                            User(
+                                "yasin.bono@walla.com",
+                                "00000000",
+                                "yasin bono",
+                                "Master",
+                                image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_wEufSNUkQUbAH4JTm8-bn2Yj8m_8XTrc0A&usqp=CAU"
+                            )
+                        )
 
                 }
         }
