@@ -111,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
     private fun checkIntent(content: ActivityResult?) {
         val task = GoogleSignIn.getSignedInAccountFromIntent(content?.data)
         task.addOnSuccessListener{ checkUser(it) }
-            .addOnFailureListener{ displayToast("Please Sign in regular") }
+            .addOnFailureListener{ displayToast("Please Try Again") }
     }
 
     private fun checkUser(googleSignInAccount: GoogleSignInAccount) {
@@ -125,6 +125,7 @@ class LoginActivity : AppCompatActivity() {
         if (!isExist) {
             regToDatabase(googleSignInAccount)
             regToFirebase(googleSignInAccount)
+            addUsers()
         }
         openApp(googleSignInAccount.email.toString())
     }
@@ -135,7 +136,6 @@ class LoginActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 val user = User(googleSignInAccount.email.toString(), "Google Password", googleSignInAccount.givenName.toString(), "beginner")
                 FirebaseManager.getInstance(this).addUser(user)
-                openApp(googleSignInAccount.email.toString())
             }
             .addOnFailureListener { displayToast("try later") }
     }
@@ -177,10 +177,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun addUsers() {
-        thread(start = true) { Repository.getInstance(this).clearDB() }
+    fun addUsers() {
         usersViewModel.usersData.observe(this) {
-            if (it.isEmpty())
+            if (it.isEmpty()) {
                 thread(start = true) {
                     Repository.getInstance(this).addUser(
                         User(
@@ -337,10 +336,10 @@ class LoginActivity : AppCompatActivity() {
                                 image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_wEufSNUkQUbAH4JTm8-bn2Yj8m_8XTrc0A&usqp=CAU"
                             )
                         )
-
+                    }
                 }
+            }
         }
-    }
 
     private fun addLists() {
         listsViewModel.listsData.observe(this) {

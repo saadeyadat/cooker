@@ -40,6 +40,7 @@ class SignupFragment(context: Context, private val allUsers: List<User>) : Fragm
             regToDatabase(name, type, email, password1)
             regToFirebase(name, type, email, password1)
             Toast.makeText(requireContext(), "Signup Successfully.", Toast.LENGTH_SHORT).show()
+            (activity as LoginActivity?)!!.addUsers()
         }
     }
 
