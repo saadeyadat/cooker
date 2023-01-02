@@ -196,7 +196,7 @@ class ItemsActivity : AppCompatActivity() {
                     if (!listItems.contains(item))
                         listItems.add(item)
             item_recyclerView.adapter = adapter
-            itemsViewModel.itemsData.observe(this) { adapter.setList(listItems) }
+            adapter.setList(listItems)
         }
     }
 

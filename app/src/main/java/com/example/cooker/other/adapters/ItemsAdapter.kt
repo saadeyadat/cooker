@@ -27,9 +27,8 @@ class ItemsAdapter(private val list: List,
                    val updateItemImage: (Item) -> Unit,
                    val displayFruitFragment: (Item) -> Unit): RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
 
-    private var i = 0
-    private var dataList = emptyList<Item>()
-    fun setList(itemList: kotlin.collections.List<Item>) {
+    private var dataList = mutableListOf<Item>()
+    fun setList(itemList: MutableList<Item>) {
         this.dataList = itemList
         notifyDataSetChanged()
     }
@@ -89,7 +88,9 @@ class ItemsAdapter(private val list: List,
             GlobalScope.launch {
                 Repository.getInstance(context).deleteItem(dataList[position])
                 FirebaseManager.getInstance(context).deleteItem(dataList[position])
+                dataList.remove(dataList[position])
             }
+            notifyDataSetChanged()
             notifyItemRemoved(position)
         }
         alertBuilder.show()
