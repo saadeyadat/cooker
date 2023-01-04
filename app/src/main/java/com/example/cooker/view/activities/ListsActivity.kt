@@ -242,8 +242,10 @@ class ListsActivity : AppCompatActivity() {
     private var currentUser: User? = null
     private val userContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val uri = result.data?.data
-        menu_user_image.setImageURI(uri)
-        ImagesManager.userImageFromGallery(uri!!, this, currentUser!!)
+        if (uri != null) {
+            menu_user_image.setImageURI(uri)
+            ImagesManager.userImageFromGallery(uri!!, this, currentUser!!)
+        }
     }
 
     private fun cameraPermission(user: User) {

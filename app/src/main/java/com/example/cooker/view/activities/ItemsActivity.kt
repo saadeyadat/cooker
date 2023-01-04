@@ -212,7 +212,8 @@ class ItemsActivity : AppCompatActivity() {
     private var currentItem: Item? = null
     private val itemContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val uri = result.data?.data
-        ImagesManager.itemImageFromGallery(uri!!, this, currentItem!!)
+        if (uri != null)
+            ImagesManager.itemImageFromGallery(uri!!, this, currentItem!!)
     }
     private fun updateItemImage(): (item: Item) -> Unit = {
         currentItem = it
@@ -222,8 +223,10 @@ class ItemsActivity : AppCompatActivity() {
     private var currentUser: User? = null
     private val userContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val uri = result.data?.data
-        user_image.setImageURI(uri)
-        ImagesManager.userImageFromGallery(uri!!, this, currentUser!!)
+        if (uri != null) {
+            user_image.setImageURI(uri)
+            ImagesManager.userImageFromGallery(uri!!, this, currentUser!!)
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
