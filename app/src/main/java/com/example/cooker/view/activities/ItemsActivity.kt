@@ -236,7 +236,7 @@ class ItemsActivity : AppCompatActivity() {
     }
 
 
-    /* ---------------- Camera Images Update ---------------- */
+    /* ----------------- Camera Images Update ----------------- */
     private fun cameraAlert(context: Context) {
         usersViewModel.viewModelScope.launch(Dispatchers.Main) {
             val alertBuilder = AlertDialog.Builder(context)
